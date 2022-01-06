@@ -100,7 +100,7 @@ main {
 
 .hairy-thing {
   position: relative;
-  background: transparent url(/images/hairy-thing-spritesheet.png) 0 0 no-repeat;
+  background: transparent url(images/hairy-thing-spritesheet.png) 0 0 no-repeat;
   width: 236px;
   height: 205px;
   margin: 2em auto;
