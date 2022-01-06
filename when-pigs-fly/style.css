@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap');
+
+
+body {
+  background: rgb(238,174,202);
+  background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+  background: center / cover no-repeat url(media/jungle-bg.jpg);
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: url('media/gun-cursor-1.ico'), url('media/gun-cursor-1.png'), pointer;
+
+}
+
+#collision-canvas {
+  opacity: 0;
+}
+
+button {
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  border-radius: 7px;
+  color: #333;
+  background: #FFD800;
+  box-shadow: 0 0 5px #000;
+  border: 1px solid #bfa003;
+  text-transform: uppercase;
+  z-index: 2;
+  transition:
+    background-color .25s ease,
+    color 0.25s ease;
+}
+button:hover {
+  background: #bfa003;
+  color: #fff;
+}
+
+.start-btn {
+  font-size: 50px;
+  display: block;
+}
+
+.start-btn.disabled {
+  display: none;
+}
+
+.restart-btn {
+  display: none;
+}
+
+.restart-btn.active {
+  display: block;
+  position: absolute;
+  top: 20px;
+  right: 10px;
+  font-size: 18px;
+}
+
+.restart-btn.game-over {
+  display: block;
+  font-size: 50px;
+  margin-top: 300px;
+  font-weight: 700;
+}

@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap');
+
+* {
+  font-family: Nunito, Tahoma, sans-serif;
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.instructions {
+  z-index: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.instructions.inactive {
+  z-index: 0;
+}
+
+.card {
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 1rem;
+  padding: 1rem 2rem;
+  margin: 1rem 0;
+  box-shadow: 0 0 20px #000;
+}
+
+.card p {
+  text-align: center;
+  font-size: 2rem;
+  color: #333;
+}
+
+button {
+  cursor: pointer;
+  font-size: 2rem;
+  border: 1px solid #064663;
+  border-radius: 1rem;
+  width: 10rem;
+  margin: 1rem 0;
+  color: #ECB365;
+  background: #041C32;
+  transition:
+    background-color ease-in-out 200ms,
+    transform ease-in-out 200ms;
+}
+
+button:hover {
+  background: #064663;
+  transform: scale(1.5, 1.5);
+}
+
+.restart-btn.active {
+  font-size: 1.4rem;
+  width: 7rem;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  position: absolute;
+  margin-right: 1.2rem;
+}
+
+.restart-btn.active:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.restart-btn.inactive {
+  display: none;
+}
+
+.floor {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url(media/Brick_01.png);
+}
+
+canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  width: 100%;
+  height: 100vh;
+}

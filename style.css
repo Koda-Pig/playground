@@ -1,0 +1,168 @@
+* {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  color: #fff;
+  background: linear-gradient(129deg, #041c32, #04293a, #064663, #000b49);
+  background-size: 800% 800%;
+  -webkit-animation: bgAnim 200s ease infinite;
+  -moz-animation: bgAnim 200s ease infinite;
+  -o-animation: bgAnim 200s ease infinite;
+  animation: bgAnim 200s ease infinite;
+}
+@-webkit-keyframes bgAnim {
+  0%{background-position:11% 0%}
+  50%{background-position:90% 100%}
+  100%{background-position:11% 0%}
+}
+@-moz-keyframes bgAnim {
+  0%{background-position:11% 0%}
+  50%{background-position:90% 100%}
+  100%{background-position:11% 0%}
+}
+@-o-keyframes bgAnim {
+  0%{background-position:11% 0%}
+  50%{background-position:90% 100%}
+  100%{background-position:11% 0%}
+}
+@keyframes bgAnim {
+  0%{background-position:11% 0%}
+  50%{background-position:90% 100%}
+  100%{background-position:11% 0%}
+}
+
+p {
+  font-size: 1.2rem;
+  padding: 2rem 0;
+}
+
+nav {
+  width: 100%;
+  height: 3rem;
+  background: rgba(0, 0, 0, 0.438);
+  position: fixed;
+  z-index: 2;
+}
+
+nav span {
+  display: none;
+  z-index: 2;
+}
+
+nav ul {
+  display: flex;
+  justify-content: space-evenly;
+  height: 3rem;
+}
+
+nav ul li {
+  list-style: none;
+  margin-top: 1rem;
+}
+
+nav ul li a {
+  color: #E7FBBE;
+  text-decoration: none;
+}
+
+nav ul li a:visited {
+  color: #FFFDDE;
+}
+
+nav ul li a:hover {
+  color: #D9D7F1;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 5rem;
+  text-align: center;
+}
+
+.moon {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  background-color: #d8d8d8;
+  box-shadow: inset 15px 15px 10px #999;
+}
+
+.hairy-thing {
+  position: relative;
+  background: transparent url(/images/hairy-thing-spritesheet.png) 0 0 no-repeat;
+  width: 236px;
+  height: 205px;
+  margin: 2em auto;
+  animation: run 1s steps(13) infinite;
+}
+
+@keyframes run {
+  100% {
+    background-position: -3070px, 0;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  nav {
+    background: transparent;
+  }
+  nav span {
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 2rem;
+    cursor: pointer;
+  }
+  nav ul {
+    flex-direction: column;
+    height: min-content;
+    align-items: flex-end;
+    visibility: hidden;
+    padding: 2.5rem 0 1rem 0;
+  }
+  nav ul li {
+    margin: 1rem;
+  }
+}
+
+nav.active {
+  height: min-content;
+  width: 10rem;
+  background: red;
+  position: absolute;
+  right: 0;
+  background: #246EA3;
+  border-radius: 0 0 0 1rem;
+}
+
+nav.active ul {
+  visibility: visible;
+}
+
+#open {
+  display: none;
+}
+
+#closed {
+  display: block;
+}
+
+.active #open {
+  display: block;
+}
+
+.active #closed {
+  display: none;
+}

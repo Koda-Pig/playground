@@ -1,0 +1,309 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap');
+
+/* Made use of logical operators where possible
+ * (Totally unnecessary, but good practice for me)
+ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Nunito', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: rgb(223,120,97);
+  background: linear-gradient(180deg, rgba(223,120,97,1) 0%, rgba(175,190,255,1) 48%, rgba(110,140,255,1) 100%);
+}
+
+body::after {
+  background: linear-gradient(0deg, rgba(21,42,56,1) 0%, rgba(41,67,92,1) 40%, rgba(21,32,56,1) 91%);
+  content: "";             
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.wrapper {
+  width: 25rem;
+  border-radius: 0.4rem;
+  background: #c3c3c3;
+  box-shadow: 0px 0px 10px #0003;
+  transition: background 0.3s ease-in-out;
+}
+
+.wrapper header {
+  color: #708DFF;
+  font-size: 1.3rem;
+  font-weight: 600;
+  padding: 1rem 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-block-end: 1px solid #dadef0;
+  transition:
+    color 0.3s ease-in-out,
+    border 0.3s ease-in-out,
+}
+
+header i {
+  cursor: pointer;
+  font-size: 0rem;
+  transition:
+    color 0.3s ease-in-out;
+}
+
+.theme-switch {
+  position: relative;
+  width: 3.6rem;
+  height: 2rem;
+}
+
+.theme-switch input {
+  display:none;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ddd;
+  transition: 0.3s;
+  border-radius: 2rem;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 1.5rem;
+  width: 1.5rem;
+  left: 0.25rem;
+  bottom: 0.25rem;
+  background: transparent url('icons/moon.svg') no-repeat right top;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+input:checked + .slider {
+  background-color: #545454;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 3px #000;
+}
+
+input:checked + .slider:before {
+  transform: translateX(1.6rem);
+}
+
+.wrapper.active header i {
+  font-size: 1.2rem;
+}
+
+.wrapper.active header i:before {
+  padding: 1rem 0.6rem;
+}
+
+.wrapper .input {
+  margin: 1.2rem 1.5rem 1.9rem;
+}
+
+.wrapper.active .input {
+  display: none;
+}
+
+.input .info-txt {
+  display: none;
+  font-size: 1.1rem;
+  text-align: center;
+  padding: 0.7rem 0.6rem;
+  border-radius: 0.4rem;
+  margin-block-end: 0.9rem;
+}
+
+.info-txt.error {
+  display: block;
+  color: #721c24;
+  background: #f8d7da;
+  border: 1px solid #dadef0;
+}
+
+.info-txt.pending {
+  display: block;
+  color: #0c5460;
+  background: #d1ecf1;
+  border: 1px solid #bee5eb;
+}
+
+.input :where(input, button) {
+  width: 100%;
+  height: 3.4rem;
+  border: none;
+  outline: none;
+  font-size: 1.1rem;
+  border-radius: 0.4rem;
+}
+
+.input input {
+  text-align: center;
+  border: 1px solid #dadef0;
+  transition:
+    color 0.3s ease-in-out,
+    border 0.3s ease-in-out,
+    background 0.3s ease-in-out
+}
+
+.input input:is(:focus, :valid) {
+  border: 2px solid #6E8CFF;
+  transition: border 0.3s ease-in-out;
+}
+
+.input .seperator {
+  height: 1px;
+  width: 100%;
+  margin-block: 1.5rem;
+  background: #dadef0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease-in-out;
+}
+
+.seperator::before {
+  content: 'or';
+  color: #999;
+  font-size: 1.2rem;
+  padding-inline: 0.9rem;
+  background: #c3c3c3;
+  transition:
+    color 0.3s ease-in-out,
+    background 0.3s ease-in-out;
+}
+
+.input button {
+  color: #fff;
+  cursor: pointer;
+  background: rgb(130,155,251);
+  background: linear-gradient(180deg, rgba(130,155,251,1) 48%, rgba(110,140,255,1) 100%);
+  transition:
+    background 0.3s ease-in-out,
+    box-shadow 0.2s ease-in-out;
+}
+
+.input button:hover {
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.6);
+}
+
+.wrapper .weather-sect {
+  margin: 1.9rem 0 0;
+  display: none;
+  align-items: center;
+  flex-direction: column;
+}
+
+.wrapper.active .weather-sect {
+  display: flex;
+}
+
+.weather-sect img {
+  max-width: 8rem; 
+}
+
+.weather-sect .temp {
+  display: flex;
+  font-size: 4.5rem;
+  font-weight: 600;
+  color: #333;
+  transition: color 0.3s ease-in-out;
+}
+
+.weather-sect .temp .numb {
+  font-weight: 600;
+}
+
+.weather-sect .temp .deg {
+  font-size: 2.5rem;
+  margin: 0.6rem 0.3rem 0 0;
+  display:block;
+}
+
+.weather-sect .location {
+  display: flex;
+  align-items: center;
+  font-size: 1.3rem;
+  margin-block-end: 1.9rem;
+  color: #333;
+  transition: color 0.3s ease-in-out;
+}
+
+.location i {
+  font-size: 1.4rem;
+  margin-inline-end: 0.3rem;
+}
+
+.weather-sect .bottom-details {
+  width: 100%;
+  border-block-start: 1px solid #dadef0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #333;
+  transition:
+    color 0.3s ease-in-out,
+    border 0.3s ease-in-out;
+}
+
+.weather {
+  color: #333;
+  transition: color 0.3s ease-in-out;
+}
+
+.bottom-details .column {
+  width: 100%;
+  padding-block: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.column i {
+  color: #708DFF;
+  font-size: 2.5rem;
+  padding-inline-end: 0.5rem;
+}
+
+.column.humidity {
+  border-inline-start: 1px solid #dadef0;
+  transition: border 0.3s ease-in-out;
+}
+
+.details .temp, .humidity span {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-block-start: -0.2rem;
+}
+
+.details .temp .deg {
+  margin: 0;
+  font-size: 1.1rem;
+  padding: 0 2px 0 1px;
+}
+
+.details p {
+  font-size: 0.9rem;
+  margin-block-start: -0.3rem;
+}

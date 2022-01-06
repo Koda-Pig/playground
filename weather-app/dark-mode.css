@@ -1,0 +1,61 @@
+body.dark-mode:after  {
+  opacity: 1;
+}
+
+.dark-mode .wrapper {
+  background: #423F3E;
+}
+
+.dark-mode .wrapper header {
+  color: #F6E9E9; 
+  border-block-end: 1px solid #333;
+}
+
+.dark-mode .slider:before {
+  background: transparent url('icons/sun.svg') no-repeat right top;
+
+}
+
+.dark-mode .input input {
+  color: #F6E9E9;
+  border: 1px solid #363030;
+  background: #272121;
+}
+
+.dark-mode .input input:is(:focus, :valid) {
+  border: 2px solid #6E8CFF;
+}
+
+.dark-mode .input .seperator {
+  background: #999;
+}
+
+.dark-mode .seperator::before {
+  color: #999;
+  background: #423F3E;
+}
+
+.dark-mode .input button {
+  background: #708CFD;
+}
+
+.dark-mode .weather-sect .temp {
+  color: #F6E9E9;
+}
+
+.dark-mode .weather-sect .location {
+  color: #F6E9E9;
+}
+
+.dark-mode .weather-sect .bottom-details {
+  border-block-start: 1px solid #333;
+  color: #F6E9E9;
+}
+
+.dark-mode .weather {
+  color: #F6E9E9;
+}
+
+.dark-mode .column.humidity {
+  border-inline-start: 1px solid #333;
+}
