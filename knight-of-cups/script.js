@@ -303,7 +303,6 @@ window.addEventListener('load',() => {
     } else {
       drawGameOver();
     }
-
   }
 
   function startAnimating(fps) {
