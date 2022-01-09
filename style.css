@@ -17,21 +17,7 @@ body {
   -o-animation: bgAnim 200s ease infinite;
   animation: bgAnim 200s ease infinite;
 }
-@-webkit-keyframes bgAnim {
-  0%{background-position:11% 0%}
-  50%{background-position:90% 100%}
-  100%{background-position:11% 0%}
-}
-@-moz-keyframes bgAnim {
-  0%{background-position:11% 0%}
-  50%{background-position:90% 100%}
-  100%{background-position:11% 0%}
-}
-@-o-keyframes bgAnim {
-  0%{background-position:11% 0%}
-  50%{background-position:90% 100%}
-  100%{background-position:11% 0%}
-}
+
 @keyframes bgAnim {
   0%{background-position:11% 0%}
   50%{background-position:90% 100%}
@@ -113,7 +99,7 @@ main {
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 780px) {
   nav {
     background: transparent;
   }
@@ -139,7 +125,7 @@ main {
 
 nav.active {
   height: min-content;
-  width: 10rem;
+  width: 14rem;
   background: red;
   position: absolute;
   right: 0;

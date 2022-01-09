@@ -26,7 +26,7 @@ window.addEventListener('load',() => {
 
   loseHealthSound.src = 'media/blip.wav';
   gameOverSound.src = 'media/game-over.wav';
-  ctx.font = '30px Impact'
+  ctx.font = '30px Impact';
 
   class Pig {
     constructor() {
@@ -253,7 +253,7 @@ window.addEventListener('load',() => {
     ctx.save();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     collisionCtx.clearRect(0, 0, canvas.width, canvas.height);
-    let deltaTime = timestamp - lastTime;
+    let deltaTime = (timestamp - lastTime) * .5; // * .5 to limit framerate
     lastTime = timestamp;
     timeToNextPig += deltaTime;
     if (timeToNextPig > pigInterval) {
