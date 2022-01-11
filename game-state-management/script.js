@@ -1,6 +1,6 @@
-import Player from './player';
-import { ResizeWindow, drawStatusText } from './utils';
-import InputHandler from './input';
+import Player from './player.js';
+import { ResizeWindow, drawStatusText } from './utils.js';
+import InputHandler from './input.js';
 
 window.addEventListener('load',() => {
 
