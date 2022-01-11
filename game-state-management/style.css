@@ -1,0 +1,35 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Helvetica, sans-serif;
+}
+
+body {
+  overflow: hidden;
+}
+
+canvas {
+  top: 0;
+  left: 0;
+  background: linear-gradient(124deg, #2f3c39, #386f62);
+  background-size: 400% 400%;
+  animation: bgAnim 100s ease infinite;
+}
+@keyframes bgAnim {
+  0%{background-position:0% 55%}
+  50%{background-position:100% 46%}
+  100%{background-position:0% 55%}
+}
+
+img {
+  display: none;
+}
+
+#loading {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  text-align: center;
+  font-size: 80px;
+}
