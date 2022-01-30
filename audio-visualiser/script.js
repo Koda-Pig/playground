@@ -86,7 +86,6 @@ window.addEventListener('load', () => {
   function createBars() {
     for (let i = 1; i < (fftSize/1.9); i++) {
       let color = 'rgb('+ i * .845 + ',' + i * .6 + ',' + Math.random() * 200 + ')'; 
-      console.log(color)
       barsLeft.push(new Bar(0, i * 1.5, 1.4, 1, color, i))
       barsRight.push(new Bar(0, i * 1.5, 1.4, 1, color, i))
     }
