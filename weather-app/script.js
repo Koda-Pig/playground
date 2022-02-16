@@ -136,7 +136,8 @@ themeToggle.addEventListener('change', () =>
 
 // theme switch if user color scheme is dark
 window.addEventListener('load', () => {
-  if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) 
+  if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
     body.classList.toggle('dark-mode')
     themeToggle.checked = true
+  }
 })
