@@ -99,7 +99,7 @@ main {
   }
 }
 
-@media screen and (max-width: 780px) {
+@media screen and (max-width: 1050px) {
   nav {
     background: transparent;
   }
