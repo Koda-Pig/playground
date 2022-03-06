@@ -8,7 +8,11 @@ window.addEventListener('load', () => {
   canvas.height = 720
   let enemies = [],
       score = 0,
-      gameOver = false
+      gameOver = false,
+      lastTime = 0,
+      enemyTimer = 0,
+      enemyInterval = 2000,
+      randomEnemyInterval = Math.random() * 1000 + 500
 
   restartBtn.addEventListener('click', () => restartGame())
   fullscreenBtn.addEventListener('click', () => toggleFullScreen())
@@ -46,7 +50,6 @@ window.addEventListener('load', () => {
 
         if (swipeYdist < -this.touchThreshold && this.keys.indexOf('swipe up') === -1) {
           this.keys.push('swipe up')
-
 
         } else if (swipeXdist > this.touchThreshold && this.keys.indexOf('swipe right') === -1) {
           this.keys.push('swipe right')
@@ -114,10 +117,17 @@ window.addEventListener('load', () => {
         else this.frameX++
         this.frameTimer = 0
       } else this.frameTimer += deltaTime
-      if (input.keys.indexOf('ArrowRight') > -1 || input.keys.indexOf('swipe right') > -1) this.speed = 10
-      else if (input.keys.indexOf('ArrowLeft') > -1 || input.keys.indexOf('swipe left') > -1) this.speed = -10
-      else if ((input.keys.indexOf('ArrowUp') > -1 || input.keys.indexOf('swipe up') > -1) && this.onGround()) this.vy -= 32
-      else this.speed = 0
+
+      if ((input.keys.indexOf('ArrowUp') > -1 || input.keys.indexOf('swipe up') > -1) && this.onGround()) {
+        this.vy -= 32        
+      } else if (input.keys.indexOf('ArrowRight') > -1 || input.keys.indexOf('swipe right') > -1) {
+        this.speed = 10
+      } else if (input.keys.indexOf('ArrowLeft') > -1 || input.keys.indexOf('swipe left') > -1) {
+        this.speed = -10
+      }
+      else {
+        this.speed = 0
+      }
       // horizontal movement
       this.x += this.speed
       if (this.x < 0) this.x = 0
@@ -270,11 +280,6 @@ window.addEventListener('load', () => {
   const input = new InputHandler()
   const player = new Player(canvas.width, canvas.height)
   const bg = new Background(canvas.width, canvas.height)
-
-  let lastTime = 0,
-      enemyTimer = 0,
-      enemyInterval = 2000,
-      randomEnemyInterval = Math.random() * 1000 + 500
   
   function animate(timeStamp) {
     const deltaTime = timeStamp - lastTime
