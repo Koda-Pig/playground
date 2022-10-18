@@ -50,11 +50,9 @@ button {
   border-radius: 1rem;
   width: 10rem;
   margin: 1rem 0;
-  color: #ECB365;
-  background: #041C32;
-  transition:
-    background-color ease-in-out 200ms,
-    transform ease-in-out 200ms;
+  color: #ecb365;
+  background: #041c32;
+  transition: background-color ease-in-out 200ms, transform ease-in-out 200ms;
 }
 
 button:hover {

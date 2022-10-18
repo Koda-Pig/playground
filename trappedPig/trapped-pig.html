@@ -1,110 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>trapped pig</title>
     <style>
-        * {
-            color:white;
-            font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-        }
-        html {
-            background: url('./grass.jpg');
-        }
-        h1 {
-            font-size:3em;
-            text-align: center;
-            -webkit-text-stroke: 2px black;
-            color: white;
-            text-shadow: 1px 1px 10px #564039;
-        }
-        .container {
-            max-width: 600px;
-            margin:0 auto;
-        }
-        div.field {
-            width:600px;
-            height:600px;
-            border:1px solid orange;
-            background:url('./mud.png')
-            
-        }
-        #pig {
-            position: relative;
-            width:20px;
-            left: 275px;
-            top: 275px;
-            font-size: 50px;
-            background:none;
-        }
+      * {
+        color: white;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
+          sans-serif;
+      }
+      html {
+        background: url('./grass.jpg');
+      }
+      h1 {
+        font-size: 3em;
+        text-align: center;
+        -webkit-text-stroke: 2px black;
+        color: white;
+        text-shadow: 1px 1px 10px #564039;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      div.field {
+        width: 600px;
+        height: 600px;
+        border: 1px solid orange;
+        background: url('./mud.png');
+      }
+      #pig {
+        position: relative;
+        width: 20px;
+        left: 275px;
+        top: 275px;
+        font-size: 50px;
+        background: none;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <h1>use the arrow keys to move</h1>
-        <div class="field">
-            <span id="pig">🐖</span>
-        </div>
+      <h1>use the arrow keys to move</h1>
+      <div class="field">
+        <span id="pig">🐖</span>
+      </div>
     </div>
     <script>
+      let pig = document.getElementById('pig')
+      let getStyle = window.getComputedStyle(pig)
+      let yValue = getStyle.getPropertyValue('top')
+      let xValue = getStyle.getPropertyValue('left')
+      let warningYou = 'You cannot get out'
 
-let pig = document.getElementById('pig');
-let getStyle = window.getComputedStyle(pig);
-let yValue = getStyle.getPropertyValue('top');
-let xValue = getStyle.getPropertyValue('left');
-let warningYou = 'You cannot get out';
+      document.onkeydown = checkKey
 
-document.onkeydown = checkKey;
+      function checkKey(event) {
+        event = event || window.event
 
-function checkKey(event) {
-    event = event || window.event;
-
-    if (event.keyCode == '38') {
-        // up arrow
-        if (yValue == '275px' || Math.sign(yValue) == 1 || Math.sign(yValue) == 0) {
-            yValue = Number.parseInt(yValue) - 10;
-            pig.style.top = yValue + 'px';
-        } else {
-            pig.style.top = yValue;
-            window.alert(warningYou);
+        if (event.keyCode == '38') {
+          // up arrow
+          if (
+            yValue == '275px' ||
+            Math.sign(yValue) == 1 ||
+            Math.sign(yValue) == 0
+          ) {
+            yValue = Number.parseInt(yValue) - 10
+            pig.style.top = yValue + 'px'
+          } else {
+            pig.style.top = yValue
+            window.alert(warningYou)
+          }
+        } else if (event.keyCode == '40') {
+          // down arrow
+          if (yValue == '275px' || yValue < 525) {
+            yValue = Number.parseInt(yValue) + 10
+            pig.style.top = yValue + 'px'
+          } else {
+            pig.style.top = yValue
+            window.alert(warningYou)
+          }
+        } else if (event.keyCode == '37') {
+          // left arrow
+          if (
+            xValue == '275px' ||
+            Math.sign(xValue - 5) == 1 ||
+            Math.sign(xValue) == 0
+          ) {
+            xValue = Number.parseInt(xValue) - 10
+            pig.style.left = xValue + 'px'
+          } else {
+            pig.style.left = xValue
+            window.alert(warningYou)
+          }
+        } else if (event.keyCode == '39') {
+          // right arrow
+          if (xValue == '275px' || xValue < 525) {
+            xValue = Number.parseInt(xValue) + 10
+            pig.style.left = xValue + 'px'
+          } else {
+            pig.style.left = xValue
+            window.alert(warningYou)
+          }
         }
-    }
-    else if (event.keyCode == '40') {
-        // down arrow
-        if (yValue == '275px' || yValue < 525) {
-            yValue = Number.parseInt(yValue) + 10;
-            pig.style.top = yValue + 'px';
-        } else {
-            pig.style.top = yValue;
-            window.alert(warningYou);
-        }
-    }
-    else if (event.keyCode == '37') {
-       // left arrow
-       if (xValue == '275px' || Math.sign(xValue-5) == 1 || Math.sign(xValue) == 0) {
-            xValue = Number.parseInt(xValue) - 10;
-            pig.style.left = xValue + 'px';
-        } else {
-            pig.style.left = xValue;
-            window.alert(warningYou);
-        }
-    }
-    else if (event.keyCode == '39') {
-       // right arrow
-       if (xValue == '275px' || xValue < 525) {
-            xValue = Number.parseInt(xValue) + 10;
-            pig.style.left = xValue + 'px';
-       } else {
-           pig.style.left = xValue;
-            window.alert(warningYou);
-       }
-    }
-}
-
-
-
+      }
     </script>
-</body>
+  </body>
 </html>

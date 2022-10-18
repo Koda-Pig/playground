@@ -19,9 +19,15 @@ body {
 }
 
 @keyframes bgAnim {
-  0%{background-position:11% 0%}
-  50%{background-position:90% 100%}
-  100%{background-position:11% 0%}
+  0% {
+    background-position: 11% 0%;
+  }
+  50% {
+    background-position: 90% 100%;
+  }
+  100% {
+    background-position: 11% 0%;
+  }
 }
 
 p {
@@ -54,16 +60,16 @@ nav ul li {
 }
 
 nav ul li a {
-  color: #E7FBBE;
+  color: #e7fbbe;
   text-decoration: none;
 }
 
 nav ul li a:visited {
-  color: #FFFDDE;
+  color: #fffdde;
 }
 
 nav ul li a:hover {
-  color: #D9D7F1;
+  color: #d9d7f1;
 }
 
 main {
@@ -129,7 +135,7 @@ nav.active {
   background: red;
   position: absolute;
   right: 0;
-  background: #246EA3;
+  background: #246ea3;
   border-radius: 0 0 0 1rem;
 }
 

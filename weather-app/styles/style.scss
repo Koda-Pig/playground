@@ -3,18 +3,28 @@
 /* Made use of logical operators where possible
  * (Totally unnecessary, but good practice for me)
  */
-$gradient-light: linear-gradient(180deg, rgba(223,120,97,1) 0%, rgba(175,190,255,1) 48%, rgba(110,140,255,1) 100%);
-$gradient-dark: linear-gradient(0deg, rgba(21,42,56,1) 0%, rgba(41,67,92,1) 40%, rgba(21,32,56,1) 91%);
+$gradient-light: linear-gradient(
+  180deg,
+  rgba(223, 120, 97, 1) 0%,
+  rgba(175, 190, 255, 1) 48%,
+  rgba(110, 140, 255, 1) 100%
+);
+$gradient-dark: linear-gradient(
+  0deg,
+  rgba(21, 42, 56, 1) 0%,
+  rgba(41, 67, 92, 1) 40%,
+  rgba(21, 32, 56, 1) 91%
+);
 
 $white: #fff;
 $black: #000;
 $light-bg: #d6d9da;
 $light-blue: #dadef0;
-$light-pink: #F6E9E9;
-$purp: #708DFF;
+$light-pink: #f6e9e9;
+$purp: #708dff;
 $light-gray: #999;
 $off-gray: #545454;
-$dark-bg: #423F3E;
+$dark-bg: #423f3e;
 $dark-txt: #333;
 $dark-shadow: #0003;
 $warning-txt: #721c24;
@@ -42,7 +52,7 @@ body {
   background: $gradient-light;
   &::after {
     background: $gradient-dark;
-    content: "";             
+    content: '';
     position: absolute;
     top: 0;
     bottom: 0;
@@ -52,7 +62,7 @@ body {
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
   }
-  &.dark-mode::after  {
+  &.dark-mode::after {
     opacity: 1;
   }
 }
@@ -72,14 +82,11 @@ body {
     align-items: center;
     justify-content: space-between;
     border-block-end: 1px solid $light-blue;
-    transition:
-      color 0.3s ease-in-out,
-      border 0.3s ease-in-out;
+    transition: color 0.3s ease-in-out, border 0.3s ease-in-out;
     i {
       cursor: pointer;
       font-size: 0rem;
-      transition:
-        color 0.3s ease-in-out;
+      transition: color 0.3s ease-in-out;
     }
   }
   &.active {
@@ -95,7 +102,7 @@ body {
     .weather-sect {
       display: flex;
       img {
-        max-width: 8rem; 
+        max-width: 8rem;
       }
       .temp {
         display: flex;
@@ -109,7 +116,7 @@ body {
         .deg {
           font-size: 2.5rem;
           margin: 0.6rem 0.3rem 0 0;
-          display:block;
+          display: block;
         }
       }
       .weather {
@@ -135,9 +142,7 @@ body {
         align-items: center;
         justify-content: space-between;
         color: $dark-txt;
-        transition:
-          color 0.3s ease-in-out,
-          border 0.3s ease-in-out;
+        transition: color 0.3s ease-in-out, border 0.3s ease-in-out;
         .column {
           width: 100%;
           padding-block: 0.9rem;
@@ -211,9 +216,7 @@ body {
     input {
       text-align: center;
       border: 1px solid $light-blue;
-      transition:
-        color 0.3s ease-in-out,
-        border 0.3s ease-in-out,
+      transition: color 0.3s ease-in-out, border 0.3s ease-in-out,
         background-color 0.3s ease-in-out;
 
       &:is(:focus, :valid) {
@@ -236,19 +239,19 @@ body {
         font-size: 1.2rem;
         padding-inline: 0.9rem;
         background: $light-bg;
-        transition:
-          color 0.3s ease-in-out,
-          background-color 0.3s ease-in-out;
+        transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
       }
     }
     button {
       color: $white;
       cursor: pointer;
-      background: rgb(130,155,251);
-      background: linear-gradient(180deg, rgba(130,155,251,1) 48%, rgba(110,140,255,1) 100%);
-      transition:
-        background-color 0.3s ease-in-out,
-        box-shadow 0.2s ease-in-out;
+      background: rgb(130, 155, 251);
+      background: linear-gradient(
+        180deg,
+        rgba(130, 155, 251, 1) 48%,
+        rgba(110, 140, 255, 1) 100%
+      );
+      transition: background-color 0.3s ease-in-out, box-shadow 0.2s ease-in-out;
       &:hover {
         box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.6);
       }
@@ -267,7 +270,7 @@ body {
   width: 3.6rem;
   height: 2rem;
   input {
-    display:none;
+    display: none;
   }
 }
 
@@ -283,7 +286,7 @@ body {
   border-radius: 2rem;
   &::before {
     position: absolute;
-    content: "";
+    content: '';
     height: 1.5rem;
     width: 1.5rem;
     left: 0.25rem;
@@ -308,12 +311,11 @@ input {
   }
 }
 
-
 .dark-mode {
   .wrapper {
     background: $dark-bg;
     header {
-      color: $light-pink; 
+      color: $light-pink;
       border-block-end: 1px solid $dark-txt;
     }
     .slider::before {

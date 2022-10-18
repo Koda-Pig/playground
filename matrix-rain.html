@@ -1,127 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      overflow: hidden;
-      background: #000;
-    }
-
-    canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      background: #000;
-    }
-  </style>
-  <title>matrix-rain</title>
-</head>
-<body>
-  <canvas></canvas>
-  <script>
-    const canvas = document.querySelector('canvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    let fpsInterval, now, then, elapsed,
-    gradient = ctx.createRadialGradient(canvas.width/2, canvas.height/2, 500, canvas.width/2, canvas.height/4, 100);
-    gradient.addColorStop(0, '#EDD2F3');
-    gradient.addColorStop(0.2, '#FFFCDC');
-    gradient.addColorStop(0.4, '#84DFFF');
-    gradient.addColorStop(0.6, '#516BEB');
-
-    class Symbol {
-      constructor(x, y, fontSize, canvasHeight) {
-        this.characters = 'ア٥ｦﾎギﾔｷ۶ｸォジ٦ﾂﾌﾛ۴ﾝｻﾀヰﾖ۵ﾚィｶ٧ﾄ、١ｳ٩ラャﾉ٨ｿﾈﾊﾐﾋマ٢ビｼメﾕｾヽｱｹﾓｵｲ٤ベｽﾇﾘﾁモョ٠キｰﾍ٣ﾑﾗﾜﾃﾙッﾏﾅｺュﾆムﾒｴ';
-        this.x = x;
-        this.y = y;
-        this.fontSize = fontSize;
-        this.text = '';
-        this.canvasHeight = canvasHeight;
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
       }
-      draw() {
-        // .charAt() takes a single index argument, returns character at that point in the string
-        this.text = this.characters.charAt(Math.floor(Math.random()*this.characters.length)); 
-        ctx.fillText(this.text, this.x * this.fontSize, this.y * this.fontSize);
-        if (this.y * this.fontSize > this.canvasHeight && Math.random() > 0.96) {
-          this.y = 0;
-        } else {
-          this.y += 1;
+
+      body {
+        overflow: hidden;
+        background: #000;
+      }
+
+      canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: #000;
+      }
+    </style>
+    <title>matrix-rain</title>
+  </head>
+  <body>
+    <canvas></canvas>
+    <script>
+      const canvas = document.querySelector('canvas')
+      const ctx = canvas.getContext('2d')
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight
+
+      let fpsInterval,
+        now,
+        then,
+        elapsed,
+        gradient = ctx.createRadialGradient(
+          canvas.width / 2,
+          canvas.height / 2,
+          500,
+          canvas.width / 2,
+          canvas.height / 4,
+          100
+        )
+      gradient.addColorStop(0, '#EDD2F3')
+      gradient.addColorStop(0.2, '#FFFCDC')
+      gradient.addColorStop(0.4, '#84DFFF')
+      gradient.addColorStop(0.6, '#516BEB')
+
+      class Symbol {
+        constructor(x, y, fontSize, canvasHeight) {
+          this.characters =
+            'ア٥ｦﾎギﾔｷ۶ｸォジ٦ﾂﾌﾛ۴ﾝｻﾀヰﾖ۵ﾚィｶ٧ﾄ、١ｳ٩ラャﾉ٨ｿﾈﾊﾐﾋマ٢ビｼメﾕｾヽｱｹﾓｵｲ٤ベｽﾇﾘﾁモョ٠キｰﾍ٣ﾑﾗﾜﾃﾙッﾏﾅｺュﾆムﾒｴ'
+          this.x = x
+          this.y = y
+          this.fontSize = fontSize
+          this.text = ''
+          this.canvasHeight = canvasHeight
+        }
+        draw() {
+          // .charAt() takes a single index argument, returns character at that point in the string
+          this.text = this.characters.charAt(
+            Math.floor(Math.random() * this.characters.length)
+          )
+          ctx.fillText(
+            this.text,
+            this.x * this.fontSize,
+            this.y * this.fontSize
+          )
+          if (
+            this.y * this.fontSize > this.canvasHeight &&
+            Math.random() > 0.96
+          ) {
+            this.y = 0
+          } else {
+            this.y += 1
+          }
         }
       }
-    }
 
-    class Effect {
-      constructor(canvasWidth, canvasHeight) {
-        this.canvasWidth = canvasWidth;
-        this.canvasHeight = canvasHeight;
-        this.fontSize = 25;
-        this.columns = this.canvasWidth/this.fontSize;
-        this.symbols = [];
-        this.#initialize();
-      }
-      #initialize() {
-        for (let i = 0; i < this.columns; i++) {
-          this.symbols[i] = new Symbol(i, 0, this.fontSize, this.canvasHeight);
+      class Effect {
+        constructor(canvasWidth, canvasHeight) {
+          this.canvasWidth = canvasWidth
+          this.canvasHeight = canvasHeight
+          this.fontSize = 25
+          this.columns = this.canvasWidth / this.fontSize
+          this.symbols = []
+          this.#initialize()
+        }
+        #initialize() {
+          for (let i = 0; i < this.columns; i++) {
+            this.symbols[i] = new Symbol(i, 0, this.fontSize, this.canvasHeight)
+          }
+        }
+        resize(width, height) {
+          this.canvasWidth = width
+          this.canvasHeight = height
+          this.columns = this.canvasWidth / this.fontSize
+          this.symbols = []
+          this.#initialize()
         }
       }
-      resize(width, height) {
-        this.canvasWidth = width;
-        this.canvasHeight = height;
-        this.columns = this.canvasWidth/this.fontSize;
-        this.symbols = [];
-        this.#initialize();
+
+      const effect = new Effect(canvas.width, canvas.height)
+
+      function animate() {
+        requestAnimationFrame(animate)
+        now = Date.now()
+        elapsed = now - then
+        if (elapsed > fpsInterval) {
+          then = now - (elapsed % fpsInterval)
+          ctx.fillStyle = 'rgba(0, 0, 0, 0.05)'
+          ctx.fillRect(0, 0, canvas.width, canvas.height)
+          ctx.direction = 'ltr'
+          ctx.textAlign = 'center'
+          ctx.fillStyle = gradient
+          ctx.font = effect.fontSize + 'px monospace'
+          effect.symbols.forEach((symbol) => symbol.draw(ctx))
+        }
       }
-    }
 
-    const effect = new Effect(canvas.width, canvas.height);
-
-    function animate() {
-      requestAnimationFrame(animate);
-      now = Date.now();
-      elapsed = now - then;
-      if (elapsed > fpsInterval) {
-        then = now - (elapsed % fpsInterval);
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.direction = 'ltr';
-        ctx.textAlign = 'center';
-        ctx.fillStyle = gradient;
-        ctx.font = effect.fontSize + 'px monospace';
-        effect.symbols.forEach(symbol => symbol.draw(ctx));
+      function startAnimating(fps) {
+        fpsInterval = 1000 / fps
+        then = Date.now()
+        startTime = then
+        animate()
       }
-    }
 
-    function startAnimating(fps) {
-      fpsInterval = 1000/fps;
-      then = Date.now();
-      startTime = then;
-      animate();
-    }
+      startAnimating(15)
 
-    startAnimating(15);
-
-    window.addEventListener('resize', () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      effect.resize(canvas.width, canvas.height);
-      gradient = ctx.createRadialGradient(canvas.width/2, canvas.height/2, 500, canvas.width/2, canvas.height/4, 100);
-      gradient.addColorStop(0, '#EDD2F3');
-      gradient.addColorStop(0.2, '#FFFCDC');
-      gradient.addColorStop(0.4, '#84DFFF');
-      gradient.addColorStop(0.6, '#516BEB');
-    })
-
-  </script>
-</body>
+      window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth
+        canvas.height = window.innerHeight
+        effect.resize(canvas.width, canvas.height)
+        gradient = ctx.createRadialGradient(
+          canvas.width / 2,
+          canvas.height / 2,
+          500,
+          canvas.width / 2,
+          canvas.height / 4,
+          100
+        )
+        gradient.addColorStop(0, '#EDD2F3')
+        gradient.addColorStop(0.2, '#FFFCDC')
+        gradient.addColorStop(0.4, '#84DFFF')
+        gradient.addColorStop(0.6, '#516BEB')
+      })
+    </script>
+  </body>
 </html>

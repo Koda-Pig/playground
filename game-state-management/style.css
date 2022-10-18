@@ -17,9 +17,15 @@ canvas {
   animation: bgAnim 100s ease infinite;
 }
 @keyframes bgAnim {
-  0%{background-position:0% 55%}
-  50%{background-position:100% 46%}
-  100%{background-position:0% 55%}
+  0% {
+    background-position: 0% 55%;
+  }
+  50% {
+    background-position: 100% 46%;
+  }
+  100% {
+    background-position: 0% 55%;
+  }
 }
 
 img {
