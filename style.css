@@ -81,28 +81,35 @@ main {
 }
 
 .moon {
+  display: grid;
+  width: 384px;
+  aspect-ratio: 1/1;
   position: relative;
-  width: 250px;
-  height: 250px;
-  border: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: 50%;
+  place-items: center;
   background-color: #d8d8d8;
+  border: 1px solid rgba(0, 0, 0, 0.3);
   box-shadow: inset 15px 15px 10px #999;
 }
 
-.hairy-thing {
-  position: relative;
-  background: transparent url(images/hairy-thing-spritesheet.png) 0 0 no-repeat;
-  width: 236px;
-  height: 205px;
-  margin: 2em auto;
-  animation: run 1s steps(13) infinite;
+#skull {
+  width: 230px;
 }
 
-@keyframes run {
-  100% {
-    background-position: -3070px, 0;
-  }
+#eye-left,
+#eye-right {
+  height: 45px;
+  position: absolute;
+}
+
+#eye-left {
+  left: 115px;
+  top: 180px;
+}
+
+#eye-right {
+  left: 218px;
+  top: 180px;
 }
 
 @media screen and (max-width: 1050px) {
