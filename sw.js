@@ -1,6 +1,7 @@
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    // static is an appropriate name for a cache name
+    // static is an appropriate name for a cache name.
+    // This caches all the assets so that the site is usable offline
     caches.open('static').then((cache) => {
       return cache.addAll([
         './',

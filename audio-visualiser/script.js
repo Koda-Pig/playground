@@ -1,9 +1,11 @@
 window.addEventListener('load', () => {
   const canvas = document.querySelector('canvas'),
     ctx = canvas.getContext('2d'),
-    moth = document.querySelector('#moth')
-  canvas.width = window.innerWidth
-  canvas.height = window.innerHeight
+    moth = document.querySelector('#moth'),
+    windowWidth = window.innerWidth,
+    windowHeight = window.innerHeight
+  canvas.width = windowWidth
+  canvas.height = windowHeight
 
   class Bar {
     constructor(x, y, width, height, color, index) {
@@ -18,9 +20,7 @@ window.addEventListener('load', () => {
       const sound = micInput * 1500
       if (sound > this.height) {
         this.height = sound
-      } else {
-        this.height -= this.height * 0.01
-      }
+      } else this.height -= this.height * 0.01
     }
     draw(context) {
       if (this.index % 3 === 0) {
@@ -32,7 +32,7 @@ window.addEventListener('load', () => {
         context.bezierCurveTo(
           this.x / 2,
           this.y / 2,
-          this.height * -0.5 - 250,
+          this.height * -0.5 - 0.2569373072970195 * windowHeight,
           this.height + 450,
           this.x,
           this.y
@@ -40,13 +40,7 @@ window.addEventListener('load', () => {
         context.stroke()
         if (this.index > 100) {
           context.beginPath()
-          context.arc(
-            this.x,
-            this.y + 10 + this.height / 2,
-            this.height * 0.1,
-            0,
-            Math.PI * 2
-          )
+          context.arc(this.x, this.y + 10 + this.height / 2, this.height * 0.1, 0, Math.PI * 2)
           context.stroke()
           context.beginPath()
           context.moveTo(this.x, this.y + 20)
@@ -101,8 +95,7 @@ window.addEventListener('load', () => {
   let barsRight = []
   function createBars() {
     for (let i = 1; i < fftSize / 1.9; i++) {
-      let color =
-        'rgb(' + i * 0.845 + ',' + i * 0.6 + ',' + Math.random() * 200 + ')'
+      let color = 'rgb(' + i * 0.845 + ',' + i * 0.6 + ',' + Math.random() * 200 + ')'
       barsLeft.push(new Bar(0, i * 1.5, 1.4, 1, color, i))
       barsRight.push(new Bar(0, i * 1.5, 1.4, 1, color, i))
     }
@@ -139,9 +132,7 @@ window.addEventListener('load', () => {
       ctx.restore()
 
       softVolume = softVolume * 0.1 + volume * 0.1
-      ;(moth.style.transform =
-        'translate(-50%, -50%) scale(' + (0.82 + softVolume * 3)),
-        0 + softVolume * 3 + ')'
+      ;(moth.style.transform = 'translate(-50%, -50%) scale(' + (0.82 + softVolume * 3)), 0 + softVolume * 3 + ')'
     }
 
     requestAnimationFrame(animate)
