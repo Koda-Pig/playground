@@ -18,7 +18,6 @@ self.addEventListener('install', (event) => {
         './images/icon-384x384.png',
         './images/icon-512x512.png',
         './images/maskable_icon_x512.png',
-        './images/maskable_icon_x512.png',
         './images/pig.png',
         './images/skull.png',
         './images/sinbad-cut1.mp4',
