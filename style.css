@@ -82,6 +82,7 @@ main {
 
 .moon {
   display: grid;
+  max-width: 100%;
   width: 384px;
   aspect-ratio: 1/1;
   position: relative;
@@ -98,18 +99,17 @@ main {
 
 #eye-left,
 #eye-right {
-  height: 45px;
+  top: 49%;
+  height: 10%;
   position: absolute;
 }
 
 #eye-left {
-  left: 115px;
-  top: 180px;
+  left: 30%;
 }
 
 #eye-right {
-  left: 218px;
-  top: 180px;
+  right: 30%;
 }
 
 @media screen and (max-width: 1050px) {
