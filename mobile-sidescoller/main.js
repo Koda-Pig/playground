@@ -50,27 +50,13 @@ window.addEventListener('load', () => {
         const swipeYdist = e.changedTouches[0].pageY - this.touchY
         const swipeXdist = e.changedTouches[0].pageX - this.touchX
 
-        if (
-          swipeYdist < -this.touchThreshold &&
-          this.keys.indexOf('swipe up') === -1
-        ) {
+        if (swipeYdist < -this.touchThreshold && this.keys.indexOf('swipe up') === -1) {
           this.keys.push('swipe up')
-        } else if (
-          swipeXdist > this.touchThreshold &&
-          this.keys.indexOf('swipe right') === -1
-        ) {
+        } else if (swipeXdist > this.touchThreshold && this.keys.indexOf('swipe right') === -1) {
           this.keys.push('swipe right')
-          console.log('swipe right')
-        } else if (
-          swipeXdist < -this.touchThreshold &&
-          this.keys.indexOf('swipe left') === -1
-        ) {
+        } else if (swipeXdist < -this.touchThreshold && this.keys.indexOf('swipe left') === -1) {
           this.keys.push('swipe left')
-          console.log('swipe left')
-        } else if (
-          swipeYdist > this.touchThreshold &&
-          this.keys.indexOf('swipe down') === -1
-        ) {
+        } else if (swipeYdist > this.touchThreshold && this.keys.indexOf('swipe down') === -1) {
           this.keys.push('swipe down')
           if (gameOver) restartGame()
         }
@@ -108,13 +94,7 @@ window.addEventListener('load', () => {
       context.lineWidth = 5
       context.strokeStyle = 'white'
       context.beginPath()
-      context.arc(
-        this.x + this.width / 2,
-        this.y + this.height / 2 + 20,
-        this.width / 3,
-        0,
-        Math.PI * 2
-      )
+      context.arc(this.x + this.width / 2, this.y + this.height / 2 + 20, this.width / 3, 0, Math.PI * 2)
       context.stroke()
       /////////////////////
 
@@ -144,21 +124,11 @@ window.addEventListener('load', () => {
         this.frameTimer = 0
       } else this.frameTimer += deltaTime
 
-      if (
-        (input.keys.indexOf('ArrowUp') > -1 ||
-          input.keys.indexOf('swipe up') > -1) &&
-        this.onGround()
-      ) {
+      if ((input.keys.indexOf('ArrowUp') > -1 || input.keys.indexOf('swipe up') > -1) && this.onGround()) {
         this.vy -= 32
-      } else if (
-        input.keys.indexOf('ArrowRight') > -1 ||
-        input.keys.indexOf('swipe right') > -1
-      ) {
+      } else if (input.keys.indexOf('ArrowRight') > -1 || input.keys.indexOf('swipe right') > -1) {
         this.speed = 10
-      } else if (
-        input.keys.indexOf('ArrowLeft') > -1 ||
-        input.keys.indexOf('swipe left') > -1
-      ) {
+      } else if (input.keys.indexOf('ArrowLeft') > -1 || input.keys.indexOf('swipe left') > -1) {
         this.speed = -10
       } else {
         this.speed = 0
@@ -166,8 +136,7 @@ window.addEventListener('load', () => {
       // horizontal movement
       this.x += this.speed
       if (this.x < 0) this.x = 0
-      else if (this.x > this.gameWidth - this.width)
-        this.x = this.gameWidth - this.width
+      else if (this.x > this.gameWidth - this.width) this.x = this.gameWidth - this.width
       // vertical movement
       this.y += this.vy
       if (!this.onGround()) {
@@ -179,8 +148,7 @@ window.addEventListener('load', () => {
         this.maxFrame = 8
         this.frameY = 0
       }
-      if (this.y > this.gameHeight - this.height)
-        this.y = this.gameHeight - this.height
+      if (this.y > this.gameHeight - this.height) this.y = this.gameHeight - this.height
     }
     onGround() {
       return this.y >= this.gameHeight - this.height
@@ -206,13 +174,7 @@ window.addEventListener('load', () => {
     }
     draw(context) {
       context.drawImage(this.image, this.x, this.y, this.width, this.height)
-      context.drawImage(
-        this.image,
-        this.x + this.width,
-        this.y,
-        this.width,
-        this.height
-      )
+      context.drawImage(this.image, this.x + this.width, this.y, this.width, this.height)
     }
     update() {
       this.x -= this.speed
@@ -241,28 +203,12 @@ window.addEventListener('load', () => {
       this.markedForDeletion = false
     }
     draw(context) {
-      context.drawImage(
-        this.image,
-        this.frameX * this.width,
-        0,
-        this.width,
-        this.height,
-        this.x,
-        this.y,
-        this.width,
-        this.height
-      )
+      context.drawImage(this.image, this.frameX * this.width, 0, this.width, this.height, this.x, this.y, this.width, this.height)
       // draw hitbox
       context.lineWidth = 5
       context.strokeStyle = 'white'
       context.beginPath()
-      context.arc(
-        this.x + this.width / 2 - 20,
-        this.y + this.height / 2,
-        this.width / 3,
-        0,
-        Math.PI * 2
-      )
+      context.arc(this.x + this.width / 2 - 20, this.y + this.height / 2, this.width / 3, 0, Math.PI * 2)
       context.stroke()
       //////////////
     }
@@ -306,17 +252,9 @@ window.addEventListener('load', () => {
     if (gameOver) {
       context.textAlign = 'center'
       context.fillStyle = 'black'
-      context.fillText(
-        `GAME OVER! swipe down to restart`,
-        canvas.width / 2,
-        200
-      )
+      context.fillText(`GAME OVER! swipe down to restart`, canvas.width / 2, 200)
       context.fillStyle = 'white'
-      context.fillText(
-        `GAME OVER! swipe down to restart`,
-        canvas.width / 2 + 4,
-        202
-      )
+      context.fillText(`GAME OVER! swipe down to restart`, canvas.width / 2 + 4, 202)
       restartBtn.classList.toggle('shown')
     }
   }
