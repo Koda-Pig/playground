@@ -22,7 +22,6 @@ window.addEventListener('load', () => {
     eyes.forEach((eye) => {
       eye.style.transform = `rotate(${90 + angleDeg}deg)`
     })
-    console.log(mouseY)
   })
 
   // gets angle value
@@ -32,5 +31,21 @@ window.addEventListener('load', () => {
       rad = Math.atan2(dy, dx), // range (-PI, PI)
       deg = (rad * 180) / Math.PI // rads to degrees, range (-180, 180)
     return deg
+  }
+
+  // service worker
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+      .register('sw.js')
+      .then((registration) => {
+        console.log('SW registered')
+        console.log(registration)
+      })
+      .catch((error) => {
+        console.error('SW Registration failed')
+        console.error(error)
+      })
+  } else {
+    console.error('your device does not support service workers')
   }
 })
