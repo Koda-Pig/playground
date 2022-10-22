@@ -4,9 +4,9 @@
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
-  "name": "Josh Koter - Developer",
-  "description": "Josh Koter's website.",
-  "short_name": "Josh Koter",
+  "name": "Josh Koters playground",
+  "description": "Josh Koters fun projects",
+  "short_name": "Playground",
   "id": "/",
   "icons": [
     {
