@@ -1,3 +1,4 @@
+// Call install event
 self.addEventListener('install', (event) => {
   event.waitUntil(
     // static is an appropriate name for a cache name.

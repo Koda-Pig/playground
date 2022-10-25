@@ -34,14 +34,15 @@ window.addEventListener('load', () => {
   }
 
   // service worker
+  //// checks if supported
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker
       .register('sw.js')
       .then((registration) => {
-        console.info('SW registered')
+        console.info('Service Worker registered')
       })
       .catch((error) => {
-        console.error('SW Registration failed', error)
+        console.error('Service Worker registration failed: ', error)
       })
   } else {
     console.error('Your device does not support service workers')
