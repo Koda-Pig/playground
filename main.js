@@ -18,10 +18,20 @@ window.addEventListener('load', () => {
       rect = skull.getBoundingClientRect(),
       anchorX = rect.left + rect.width / 2,
       anchorY = rect.top + rect.height / 2,
-      angleDeg = angle(mouseX, mouseY, anchorX, anchorY)
-    eyes.forEach((eye) => {
-      eye.style.transform = `rotate(${90 + angleDeg}deg)`
-    })
+      angleDegLeft = angle(
+        mouseX,
+        mouseY,
+        anchorX - leftEyeball.offsetWidth,
+        anchorY
+      ),
+      angleDegRight = angle(
+        mouseX,
+        mouseY,
+        anchorX + rightEyeball.offsetWidth,
+        anchorY
+      )
+    leftEyeball.style.transform = `rotate(${90 + angleDegLeft}deg)`
+    rightEyeball.style.transform = `rotate(${90 + angleDegRight}deg)`
   })
 
   // gets angle value
