@@ -3,8 +3,7 @@ window.addEventListener('load', () => {
     nav = document.querySelector('nav'),
     leftEyeball = document.querySelector('#eye-left'),
     rightEyeball = document.querySelector('#eye-right'),
-    skull = document.querySelector('#skull'),
-    eyes = document.querySelectorAll('.eye')
+    skull = document.querySelector('#skull')
 
   // toggle menu on mobile
   hamburger.addEventListener('click', () => {
@@ -49,7 +48,7 @@ window.addEventListener('load', () => {
     navigator.serviceWorker
       .register('sw.js')
       .then((registration) => {
-        console.info('Service Worker registered')
+        console.info('Service Worker registered', registration)
       })
       .catch((error) => {
         console.error('Service Worker registration failed: ', error)
