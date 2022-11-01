@@ -5,7 +5,7 @@ self.addEventListener('install', (event) => {
     // This caches all the assets so that the site is usable offline
     caches.open('static').then((cache) => {
       return cache.addAll([
-        './index.html',
+        './',
         './main.js',
         './style.css',
         './favicon.ico',
