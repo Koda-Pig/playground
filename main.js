@@ -11,7 +11,7 @@ window.addEventListener('load', () => {
   })
 
   // move eyeballs on mousemove
-  window.addEventListener('mousemove', (e) => {
+  window.addEventListener('mousemove', e => {
     const mouseX = e.clientX,
       mouseY = e.clientY,
       rect = skull.getBoundingClientRect(),
@@ -43,17 +43,12 @@ window.addEventListener('load', () => {
   }
 
   // service worker
-  //// checks if supported
+  //// remove old service worker
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker
-      .register('sw.js')
-      .then((registration) => {
-        console.info('Service Worker registered', registration)
-      })
-      .catch((error) => {
-        console.error('Service Worker registration failed: ', error)
-      })
-  } else {
-    console.error('Your device does not support service workers')
+    navigator.serviceWorker.getRegistrations().then(function (registrations) {
+      for (let registration of registrations) {
+        registration.unregister()
+      }
+    })
   }
 })
