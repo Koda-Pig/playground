@@ -44,8 +44,8 @@ window.addEventListener('load', () => {
 
   // service worker
   //// remove old service worker
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.getRegistrations().then(function (registrations) {
+  if (window.navigator && navigator.serviceWorker) {
+    navigator.serviceWorker.getRegistrations().then(registrations => {
       for (let registration of registrations) {
         registration.unregister()
       }
