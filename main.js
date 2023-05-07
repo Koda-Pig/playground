@@ -43,12 +43,16 @@ window.addEventListener('load', () => {
   }
 
   // service worker
-  //// remove old service worker
-  if (window.navigator && navigator.serviceWorker) {
-    navigator.serviceWorker.getRegistrations().then(registrations => {
-      for (let registration of registrations) {
-        registration.unregister()
-      }
-    })
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+      .register('sw.js')
+      .then(registration => {
+        console.info('Service Worker registered', registration)
+      })
+      .catch(error => {
+        console.error('Service Worker registration failed: ', error)
+      })
+  } else {
+    console.error('Your device does not support service workers')
   }
 })
