@@ -156,4 +156,5 @@ window.addEventListener('load', () => {
     return screenLock;
   }
 }
+  getScreenLock() 
 })
