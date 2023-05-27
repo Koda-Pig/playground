@@ -143,4 +143,17 @@ window.addEventListener('load', () => {
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
   })
+  
+  // keep screen open
+  async function getScreenLock() {
+  if(isScreenLockSupported()){
+    let screenLock;
+    try {
+       screenLock = await navigator.wakeLock.request('screen');
+    } catch(err) {
+       console.log(err.name, err.message);
+    }
+    return screenLock;
+  }
+}
 })
