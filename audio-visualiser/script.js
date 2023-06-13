@@ -40,7 +40,13 @@ window.addEventListener('load', () => {
         context.stroke()
         if (this.index > 100) {
           context.beginPath()
-          context.arc(this.x, this.y + 10 + this.height / 2, this.height * 0.1, 0, Math.PI * 2)
+          context.arc(
+            this.x,
+            this.y + 10 + this.height / 2,
+            this.height * 0.1,
+            0,
+            Math.PI * 2
+          )
           context.stroke()
           context.beginPath()
           context.moveTo(this.x, this.y + 20)
@@ -58,7 +64,7 @@ window.addEventListener('load', () => {
       this.initialized = false
       navigator.mediaDevices
         .getUserMedia({ audio: true })
-        .then((stream) => {
+        .then(stream => {
           this.audioContext = new AudioContext()
           this.microphone = this.audioContext.createMediaStreamSource(stream)
           this.analyser = this.audioContext.createAnalyser()
@@ -68,18 +74,18 @@ window.addEventListener('load', () => {
           this.microphone.connect(this.analyser)
           this.initialized = true
         })
-        .catch((err) => {
+        .catch(err => {
           alert(err)
         })
     }
     getSamples() {
       this.analyser.getByteTimeDomainData(this.dataArray)
-      let normSamples = [...this.dataArray].map((e) => e / 128 - 1)
+      let normSamples = [...this.dataArray].map(e => e / 128 - 1)
       return normSamples
     }
     getVolume() {
       this.analyser.getByteTimeDomainData(this.dataArray)
-      let normSamples = [...this.dataArray].map((e) => e / 128 - 1)
+      let normSamples = [...this.dataArray].map(e => e / 128 - 1)
       let sum = 0
       for (let i = 0; i < normSamples.length; i++) {
         sum += normSamples[i] * normSamples[i]
@@ -95,7 +101,8 @@ window.addEventListener('load', () => {
   let barsRight = []
   function createBars() {
     for (let i = 1; i < fftSize / 1.9; i++) {
-      let color = 'rgb(' + i * 0.845 + ',' + i * 0.6 + ',' + Math.random() * 200 + ')'
+      let color =
+        'rgb(' + i * 0.845 + ',' + i * 0.6 + ',' + Math.random() * 200 + ')'
       barsLeft.push(new Bar(0, i * 1.5, 1.4, 1, color, i))
       barsRight.push(new Bar(0, i * 1.5, 1.4, 1, color, i))
     }
@@ -132,7 +139,9 @@ window.addEventListener('load', () => {
       ctx.restore()
 
       softVolume = softVolume * 0.1 + volume * 0.1
-      ;(moth.style.transform = 'translate(-50%, -50%) scale(' + (0.82 + softVolume * 3)), 0 + softVolume * 3 + ')'
+      ;(moth.style.transform =
+        'translate(-50%, -50%) scale(' + (0.82 + softVolume * 3)),
+        0 + softVolume * 3 + ')'
     }
 
     requestAnimationFrame(animate)
@@ -143,18 +152,43 @@ window.addEventListener('load', () => {
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
   })
-  
-  // keep screen open
-  async function getScreenLock() {
-  if(isScreenLockSupported()){
-    let screenLock;
-    try {
-       screenLock = await navigator.wakeLock.request('screen');
-    } catch(err) {
-       console.log(err.name, err.message);
+
+  // Keep screen from going to sleep
+  // Check if the wakeLock API is supported by the browser
+  if ('wakeLock' in navigator) {
+    let wakeLock = null
+
+    // Function to request and enable the wakeLock
+    const requestWakeLock = async () => {
+      try {
+        wakeLock = await navigator.wakeLock.request('screen')
+      } catch (error) {
+        console.error('Failed to activate screen wakeLock:', error)
+      }
     }
-    return screenLock;
+
+    // Request wakeLock on initial page load
+    requestWakeLock()
+
+    // Add event listener to handle visibility change
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState !== 'visible') {
+        if (wakeLock !== null) {
+          wakeLock
+            .release()
+            .then(() => console.log('Screen wakeLock released!'))
+            .catch(error =>
+              console.error('Failed to release screen wakeLock:', error)
+            )
+          wakeLock = null
+        }
+      } else {
+        if (wakeLock === null) {
+          requestWakeLock()
+        }
+      }
+    })
+  } else {
+    console.warn('The wakeLock API is not supported by this browser.')
   }
-}
-  getScreenLock() 
 })
