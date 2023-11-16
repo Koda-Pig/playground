@@ -172,12 +172,8 @@ window.addEventListener("load", () => {
   window.addEventListener("mousemove", resetCursorHideTimer)
 
   // Add event listener for arrow to show fullscreen button
-  fullscreenWrapper.addEventListener("mouseenter", () => {
-    fullscreenWrapper.classList.add("show")
-  })
-
-  fullscreenWrapper.addEventListener("mouseleave", () => {
-    fullscreenWrapper.classList.remove("show")
+  fullscreenArrow.addEventListener("click", () => {
+    fullscreenWrapper.classList.toggle("show")
   })
 
   // Add event listener for fullscreen button

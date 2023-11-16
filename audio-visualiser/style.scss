@@ -37,15 +37,20 @@ canvas {
 .fullscreen {
   &-wrapper {
     position: fixed;
-    top: 8px;
+    top: 0;
     left: 8px;
     display: flex;
     gap: 8px;
     z-index: 2;
     transform: translateX(calc(-100% + 36px));
     transition: transform 0.2s;
+    padding-block: 16px;
     &.show {
       transform: translateX(0);
+
+      .fullscreen-arrow {
+        transform: scaleX(-1);
+      }
     }
   }
   &-btn {
@@ -54,9 +59,15 @@ canvas {
     background: #17109a;
     color: white;
     padding: 8px 16px;
-    box-shadow: 2px 2px 2px 1px rgba(255, 255, 255, 0.2);
+    box-shadow: 0px 0px 10px 0 rgba(255, 255, 255, 0.2);
     border-radius: 100vw;
     cursor: pointer;
+    transition: box-shadow 0.2s;
+
+    &:hover,
+    &:focus {
+      box-shadow: 0px 0px 10px 0 rgba(255, 255, 255, 0.4);
+    }
   }
   &-arrow {
     padding: 0;
@@ -69,6 +80,7 @@ canvas {
     background: url($arrow-right) no-repeat center / 50px transparent;
     cursor: pointer;
     filter: brightness(10);
+    transition: transform 0.5s;
   }
 }
 
