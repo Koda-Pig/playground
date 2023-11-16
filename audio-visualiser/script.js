@@ -2,8 +2,12 @@ window.addEventListener("load", () => {
   const canvas = document.querySelector("canvas"),
     ctx = canvas.getContext("2d"),
     moth = document.querySelector("#moth"),
+    fullscreenWrapper = document.querySelector("#fullscreen-wrapper"),
+    fullscreenBtn = document.querySelector("#fullscreen-btn"),
+    fullscreenArrow = document.querySelector("#fullscreen-arrow"),
     windowWidth = window.innerWidth,
-    windowHeight = window.innerHeight
+    windowHeight = window.innerHeight,
+    cursorTimeout = 3000
   canvas.width = windowWidth
   canvas.height = windowHeight
 
@@ -100,7 +104,7 @@ window.addEventListener("load", () => {
   const microphone = new Microphone(fftSize)
   let barsLeft = []
   let barsRight = []
-  function createBars() {
+  const createBars = () => {
     for (let i = 1; i < fftSize / 1.9; i++) {
       let color =
         "rgb(" + i * 0.845 + "," + i * 0.6 + "," + Math.random() * 200 + ")"
@@ -111,7 +115,7 @@ window.addEventListener("load", () => {
   createBars()
 
   let softVolume = 0
-  function animate() {
+  const animate = () => {
     if (microphone.initialized) {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       const samples = microphone.getSamples()
@@ -148,6 +152,42 @@ window.addEventListener("load", () => {
     requestAnimationFrame(animate)
   }
   animate()
+
+  // Hide cursor after 3 seconds
+  let timeoutID
+  const hideCursor = () => {
+    document.body.classList.add("hide-cursor")
+  }
+
+  const resetCursorHideTimer = () => {
+    clearTimeout(timeoutID) // Clear the existing timeout
+    document.body.classList.remove("hide-cursor") // Show the cursor
+    timeoutID = setTimeout(hideCursor, cursorTimeout) // Reset the timer to hide the cursor again
+  }
+
+  // Set initial timeout to hide cursor
+  timeoutID = setTimeout(hideCursor, cursorTimeout)
+
+  // Add event listener for mouse movement
+  window.addEventListener("mousemove", resetCursorHideTimer)
+
+  // Add event listener for arrow to show fullscreen button
+  fullscreenWrapper.addEventListener("mouseenter", () => {
+    fullscreenWrapper.classList.add("show")
+  })
+
+  fullscreenWrapper.addEventListener("mouseleave", () => {
+    fullscreenWrapper.classList.remove("show")
+  })
+
+  // Add event listener for fullscreen button
+  fullscreenBtn.addEventListener("click", () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen()
+    } else {
+      document.documentElement.requestFullscreen()
+    }
+  })
 
   window.addEventListener("resize", () => {
     canvas.width = window.innerWidth

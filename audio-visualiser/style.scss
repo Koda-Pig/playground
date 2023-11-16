@@ -1,3 +1,5 @@
+$arrow-right: "data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools --%3E%3Csvg width='800px' height='800px' viewBox='0 0 24 24' id='_24x24_On_Light_Next' data-name='24x24/On Light/Next' xmlns='http://www.w3.org/2000/svg'%3E%3Crect id='view-box' width='24' height='24' fill='%23141124' opacity='0'/%3E%3Cpath id='Shape' d='M10.22,9.28a.75.75,0,0,1,0-1.06l2.72-2.72H.75A.75.75,0,0,1,.75,4H12.938L10.22,1.281A.75.75,0,1,1,11.281.22l4,4a.749.749,0,0,1,0,1.06l-4,4a.75.75,0,0,1-1.061,0Z' transform='translate(4.25 7.25)' fill='%23141124'/%3E%3C/svg%3E";
+
 * {
   margin: 0;
   padding: 0;
@@ -7,6 +9,10 @@
 body {
   background: #000;
   overflow: hidden;
+
+  &.hide-cursor {
+    cursor: none;
+  }
 }
 
 canvas {
@@ -20,12 +26,50 @@ canvas {
   transform: translate(-50%, -50%) scale(0.69);
   width: 800px;
   max-width: 100vmax;
+
+  path {
+    stroke-dasharray: 5000;
+    stroke-dashoffset: 3800;
+    animation: animatePath 5s ease-in-out infinite;
+  }
 }
 
-#moth path {
-  stroke-dasharray: 5000;
-  stroke-dashoffset: 3800;
-  animation: animatePath 5s ease-in-out infinite;
+.fullscreen {
+  &-wrapper {
+    position: fixed;
+    top: 8px;
+    left: 8px;
+    display: flex;
+    gap: 8px;
+    z-index: 2;
+    transform: translateX(calc(-100% + 36px));
+    transition: transform 0.2s;
+    &.show {
+      transform: translateX(0);
+    }
+  }
+  &-btn {
+    font-size: 16px;
+    border: none;
+    background: #17109a;
+    color: white;
+    padding: 8px 16px;
+    box-shadow: 2px 2px 2px 1px rgba(255, 255, 255, 0.2);
+    border-radius: 100vw;
+    cursor: pointer;
+  }
+  &-arrow {
+    padding: 0;
+    width: 40px;
+    font-size: 0;
+    height: 40px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background: url($arrow-right) no-repeat center / 50px transparent;
+    cursor: pointer;
+    filter: brightness(10);
+  }
 }
 
 @keyframes animatePath {
