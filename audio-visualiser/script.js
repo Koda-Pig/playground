@@ -1,7 +1,9 @@
-window.addEventListener('load', () => {
-  const canvas = document.querySelector('canvas'),
-    ctx = canvas.getContext('2d'),
-    moth = document.querySelector('#moth'),
+import "./style.scss"
+
+window.addEventListener("load", () => {
+  const canvas = document.querySelector("canvas"),
+    ctx = canvas.getContext("2d"),
+    moth = document.querySelector("#moth"),
     windowWidth = window.innerWidth,
     windowHeight = window.innerHeight
   canvas.width = windowWidth
@@ -60,7 +62,8 @@ window.addEventListener('load', () => {
 
   class Microphone {
     constructor(fftSize) {
-      // Fast Fourier Transform - used by web audio api, to slice raw stream data into a specific amount of audio samples
+      // Fast Fourier Transform - used by web audio api,
+      // to slice raw stream data into a specific amount of audio samples
       this.initialized = false
       navigator.mediaDevices
         .getUserMedia({ audio: true })
@@ -102,7 +105,7 @@ window.addEventListener('load', () => {
   function createBars() {
     for (let i = 1; i < fftSize / 1.9; i++) {
       let color =
-        'rgb(' + i * 0.845 + ',' + i * 0.6 + ',' + Math.random() * 200 + ')'
+        "rgb(" + i * 0.845 + "," + i * 0.6 + "," + Math.random() * 200 + ")"
       barsLeft.push(new Bar(0, i * 1.5, 1.4, 1, color, i))
       barsRight.push(new Bar(0, i * 1.5, 1.4, 1, color, i))
     }
@@ -140,30 +143,30 @@ window.addEventListener('load', () => {
 
       softVolume = softVolume * 0.1 + volume * 0.1
       ;(moth.style.transform =
-        'translate(-50%, -50%) scale(' + (0.82 + softVolume * 3)),
-        0 + softVolume * 3 + ')'
+        "translate(-50%, -50%) scale(" + (0.82 + softVolume * 3)),
+        0 + softVolume * 3 + ")"
     }
 
     requestAnimationFrame(animate)
   }
   animate()
 
-  window.addEventListener('resize', () => {
+  window.addEventListener("resize", () => {
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
   })
 
   // Keep screen from going to sleep
   // Check if the wakeLock API is supported by the browser
-  if ('wakeLock' in navigator) {
+  if ("wakeLock" in navigator) {
     let wakeLock = null
 
     // Function to request and enable the wakeLock
     const requestWakeLock = async () => {
       try {
-        wakeLock = await navigator.wakeLock.request('screen')
+        wakeLock = await navigator.wakeLock.request("screen")
       } catch (error) {
-        console.error('Failed to activate screen wakeLock:', error)
+        console.error("Failed to activate screen wakeLock:", error)
       }
     }
 
@@ -171,14 +174,14 @@ window.addEventListener('load', () => {
     requestWakeLock()
 
     // Add event listener to handle visibility change
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState !== 'visible') {
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState !== "visible") {
         if (wakeLock !== null) {
           wakeLock
             .release()
-            .then(() => console.log('Screen wakeLock released!'))
+            .then(() => console.log("Screen wakeLock released!"))
             .catch(error =>
-              console.error('Failed to release screen wakeLock:', error)
+              console.error("Failed to release screen wakeLock:", error)
             )
           wakeLock = null
         }
@@ -189,6 +192,6 @@ window.addEventListener('load', () => {
       }
     })
   } else {
-    console.warn('The wakeLock API is not supported by this browser.')
+    console.warn("The wakeLock API is not supported by this browser.")
   }
 })

@@ -1,17 +1,15 @@
-window.addEventListener('load', () => {
-  const hamburger = document.querySelector('nav span'),
-    nav = document.querySelector('nav'),
-    leftEyeball = document.querySelector('#eye-left'),
-    rightEyeball = document.querySelector('#eye-right'),
-    skull = document.querySelector('#skull')
+window.addEventListener("load", () => {
+  const hamburger = document.querySelector("nav span"),
+    nav = document.querySelector("nav"),
+    leftEyeball = document.querySelector("#eye-left"),
+    rightEyeball = document.querySelector("#eye-right"),
+    skull = document.querySelector("#skull")
 
   // toggle menu on mobile
-  hamburger.addEventListener('click', () => {
-    nav.classList.toggle('active')
-  })
+  hamburger.addEventListener("click", () => nav.classList.toggle("active"))
 
   // move eyeballs on mousemove
-  window.addEventListener('mousemove', e => {
+  window.addEventListener("mousemove", e => {
     const mouseX = e.clientX,
       mouseY = e.clientY,
       rect = skull.getBoundingClientRect(),
@@ -34,25 +32,11 @@ window.addEventListener('load', () => {
   })
 
   // gets angle value
-  function angle(cx, cy, ex, ey) {
+  const angle = (cx, cy, ex, ey) => {
     const dy = ey - cy,
       dx = ex - cx,
       rad = Math.atan2(dy, dx), // range (-PI, PI)
       deg = (rad * 180) / Math.PI // rads to degrees, range (-180, 180)
     return deg
-  }
-
-  // service worker
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker
-      .register('sw.js')
-      .then(registration => {
-        console.info('Service Worker registered', registration)
-      })
-      .catch(error => {
-        console.error('Service Worker registration failed: ', error)
-      })
-  } else {
-    console.error('Your device does not support service workers')
   }
 })
