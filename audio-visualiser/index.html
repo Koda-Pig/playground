@@ -9,20 +9,31 @@
   </head>
   <body>
     <div class="fullscreen-wrapper" id="fullscreen-wrapper">
-      <button
-        role="button"
-        aria-label="fullscreen toggle"
-        class="fullscreen-btn"
-        id="fullscreen-btn"
-      >
-        toggle fullscreen
-      </button>
-      <button
-        class="fullscreen-arrow"
-        aria-label="show fullscreen toggle button"
-        title="toggle fullscreen"
-        id="fullscreen-arrow"
-      ></button>
+      <div class="fullscreen-wrapper-inner">
+        <div class="fullscreen-controls">
+          <button
+            role="button"
+            aria-label="fullscreen toggle"
+            class="btn fullscreen-btn"
+            id="fullscreen-btn"
+          >
+            toggle fullscreen
+          </button>
+          <p>change colors</p>
+          <label for="color-picker1">color 1</label>
+          <input min="0" max="255" type="range" id="color-picker1" />
+          <label for="color-picker2">color 2</label>
+          <input min="0" max="255" type="range" id="color-picker2" />
+          <label for="color-picker3">color 3</label>
+          <input min="0" max="255" type="range" id="color-picker3" />
+        </div>
+        <button
+          class="fullscreen-arrow"
+          aria-label="show fullscreen toggle button"
+          title="toggle fullscreen"
+          id="fullscreen-arrow"
+        ></button>
+      </div>
     </div>
     <svg id="moth" viewBox="0 0 500 500">
       <defs>
@@ -33,10 +44,9 @@
           }
         </style>
         <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#0e0aae" />
-          <stop offset="33%" stop-color="#ce92c4" />
-          <stop offset="66%" stop-color="#FABB51" />
-          <stop offset="100%" stop-color="#feb407" />
+          <stop offset="0%" stop-color="#00a093" />
+          <stop offset="50%" stop-color="#009938" />
+          <stop offset="100%" stop-color="#0067b3" />
         </linearGradient>
       </defs>
       <g transform="matrix(0.908288, 0, 0, 0.908288, 27.141603, 29.754244)">
