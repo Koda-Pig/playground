@@ -7,7 +7,8 @@ window.addEventListener("load", () => {
     fullscreenWrapper = document.querySelector("#fullscreen-wrapper"),
     fullscreenBtn = document.querySelector("#fullscreen-btn"),
     fullscreenArrow = document.querySelector("#fullscreen-arrow"),
-    colorInput = Array.from(document.querySelectorAll("input[type=range]")),
+    colorRanges = Array.from(document.querySelectorAll("input[type=range]")),
+    colorInputs = Array.from(document.querySelectorAll("input[type=color]")),
     windowWidth = window.innerWidth,
     windowHeight = window.innerHeight,
     cursorTimeout = 3000
@@ -107,12 +108,12 @@ window.addEventListener("load", () => {
   const microphone = new Microphone(fftSize)
   let barsLeft = []
   let barsRight = []
-  const colorTemplate = (color1, color2, color3, index) =>
-    `rgb(${color1}, ${index * 0.6} , ${Math.random() * 200})`
+  const colorTemplate = (color1, color2, color3) =>
+    `rgb(${color1}, ${color2} , ${color3})`
 
   const createBars = () => {
     for (let i = 1; i < fftSize / 1.9; i++) {
-      let color = "rgb(0" + "," + i * 0.6 + "," + Math.random() * 200 + ")"
+      let color = colorTemplate(0, i * 0.6, Math.random() * 200)
       barsLeft.push(new Bar(0, i * 1.5, 1.4, 1, color, i))
       barsRight.push(new Bar(0, i * 1.5, 1.4, 1, color, i))
     }
@@ -160,40 +161,37 @@ window.addEventListener("load", () => {
   animate()
 
   let userColorSet = [0, 0, 0]
-  colorInput.forEach((input, index) => {
+  colorRanges.forEach((input, index) => {
     input.addEventListener("change", e => {
-      changeWingColors(e, index)
+      userColorSet[index] = +e.target.value
+      changeWingColors(userColorSet)
+    })
+  })
+  colorInputs.forEach((input, index) => {
+    input.addEventListener("change", e => {
       changeMothColors(e, index)
     })
   })
 
-  const changeWingColors = (e, index) => {
-    userColorSet[index] = +e.target.value
+  const changeWingColors = colorArray => {
     barsLeft.forEach((bar, index) => {
       bar.color = colorTemplate(
-        userColorSet[0],
-        userColorSet[1],
-        userColorSet[2],
-        index
+        colorArray[0],
+        index * colorArray[1],
+        Math.random() * colorArray[2]
       )
     })
     barsRight.forEach((bar, index) => {
       bar.color = colorTemplate(
-        userColorSet[0],
-        userColorSet[1],
-        userColorSet[2],
-        index
+        colorArray[0],
+        index * colorArray[1],
+        Math.random() * colorArray[2]
       )
     })
   }
 
-  const changeMothColors = () => {
-    mothGradientStops.forEach((stop, index) => {
-      stop.setAttribute(
-        "stop-color",
-        `rgb(${userColorSet[0]},${userColorSet[1]},${userColorSet[2]})`
-      )
-    })
+  const changeMothColors = (e, index) => {
+    mothGradientStops[index].setAttribute("stop-color", e.target.value)
   }
 
   // Hide cursor after 3 seconds
