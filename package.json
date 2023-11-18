@@ -6,7 +6,7 @@
     "dev": "concurrently \"npm run vite\" \"npm run sass\"",
     "build": "vite build",
     "preview": "vite preview",
-    "sass": "sass --watch --style=compressed audio-visualiser/style.scss:audio-visualiser/style.css"
+    "sass": "sass --watch audio-visualiser:audio-visualiser knight-of-cups:knight-of-cups mobile-sidescroller:mobile-sidescroller when-pigs-fly:when-pigs-fly --style compressed"
   },
   "dependencies": {
     "@babel/preset-env": "^7.23.3",

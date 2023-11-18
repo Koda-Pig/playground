@@ -27,6 +27,7 @@ body {
 }
 
 button {
+  cursor: pointer;
   z-index: 1;
   border-radius: 2rem;
   text-align: center;
@@ -34,7 +35,6 @@ button {
   border: none;
   color: #fff;
   padding: 10px 20px 10px 20px;
-  background: rgb(76, 0, 39);
   background: linear-gradient(
     357deg,
     rgba(76, 0, 39, 1) 0%,
@@ -46,31 +46,31 @@ button {
   background-position: bottom;
   cursor: pointer;
   transition: background-position 0.2s ease-in-out;
-}
 
-button:hover {
-  background-position: top;
-}
+  &:hover {
+    background-position: top;
+  }
 
-button.restart {
-  display: none;
-  position: absolute;
-  width: 100px;
-  top: 50vh;
-  left: calc(50vw - 50px);
-}
+  &.restart {
+    display: none;
+    position: absolute;
+    width: 100px;
+    top: 50vh;
+    left: calc(50vw - 50px);
+  }
 
-button.fullscreen {
-  position: relative;
-  display: block;
-  margin: 1rem auto;
-  font-size: 0.9rem;
-}
+  &.fullscreen {
+    position: relative;
+    display: block;
+    margin: 1rem auto;
+    font-size: 0.9rem;
+  }
 
-button.shown {
-  display: block;
-}
+  &.shown {
+    display: block;
+  }
 
-button.hidden {
-  display: none;
+  &.hidden {
+    display: none;
+  }
 }
