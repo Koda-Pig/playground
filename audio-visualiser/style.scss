@@ -16,6 +16,12 @@ body {
   &.hide-cursor {
     cursor: none;
   }
+
+  * {
+    &:focus {
+      outline: 1px solid $cosmic-latte;
+    }
+  }
 }
 
 canvas {
@@ -40,16 +46,15 @@ canvas {
 .fullscreen {
   &-wrapper {
     position: fixed;
-    top: 0;
+    top: 8px;
     left: 8px;
     z-index: 2;
     transform: translateX(calc(-100% + 36px));
     transition: transform 0.2s;
-    padding-block: 16px;
 
     &-inner {
       display: flex;
-      gap: 8px;
+      gap: 16px;
     }
 
     &.show {
@@ -113,6 +118,7 @@ canvas {
     }
   }
   &-arrow {
+    order: 1;
     padding: 0;
     width: 40px;
     font-size: 0;
@@ -123,7 +129,12 @@ canvas {
     background: url($arrow-right) no-repeat center / 50px transparent;
     cursor: pointer;
     filter: brightness(10);
-    transition: transform 0.5s;
+    transition: transform 0.5s, filter 0.2s;
+
+    &:hover,
+    &:focus {
+      filter: brightness(20);
+    }
   }
 }
 

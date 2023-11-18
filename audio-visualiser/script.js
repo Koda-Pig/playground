@@ -1,4 +1,5 @@
 window.addEventListener("load", () => {
+  /* NODES: */
   const canvas = document.querySelector("canvas"),
     ctx = canvas.getContext("2d"),
     moth = document.querySelector("#moth"),
@@ -8,13 +9,29 @@ window.addEventListener("load", () => {
     fullscreenBtn = document.querySelector("#fullscreen-btn"),
     fullscreenArrow = document.querySelector("#fullscreen-arrow"),
     colorRanges = Array.from(document.querySelectorAll("input[type=range]")),
-    colorInputs = Array.from(document.querySelectorAll("input[type=color]")),
-    windowWidth = window.innerWidth,
-    windowHeight = window.innerHeight,
-    cursorTimeout = 3000
+    colorInputs = Array.from(document.querySelectorAll("input[type=color]"))
+  /* NODES end */
+
+  /* HELPER VARIABLEES: */
+  let softVolume = 0,
+    userColorSet = [255, 255, 255],
+    timeoutID,
+    fftSize = 512,
+    barsLeft = [],
+    barsRight = [],
+    cursorTimeout = 3000,
+    wakeLock = null
+  /* HELPER VARIABLES end */
+
+  /* SET CANVAS SIZE */
+  const windowWidth = window.innerWidth,
+    windowHeight = window.innerHeight
+
   canvas.width = windowWidth
   canvas.height = windowHeight
+  /* SET CANVAS SIZE end */
 
+  /* CLASSES */
   class Bar {
     constructor(x, y, width, height, color, index) {
       this.x = x
@@ -103,13 +120,12 @@ window.addEventListener("load", () => {
       return volume
     }
   }
+  /* CLASSES end */
 
-  let fftSize = 512
-  const microphone = new Microphone(fftSize)
-  let barsLeft = []
-  let barsRight = []
-  const colorTemplate = (color1, color2, color3) =>
-    `rgb(${color1}, ${color2} , ${color3})`
+  /* FUNCTIONS */
+  const colorTemplate = (color1, color2, color3) => {
+    return `rgb(${color1}, ${color2} , ${color3})`
+  }
 
   const createBars = () => {
     for (let i = 1; i < fftSize / 1.9; i++) {
@@ -118,9 +134,7 @@ window.addEventListener("load", () => {
       barsRight.push(new Bar(0, i * 1.5, 1.4, 1, color, i))
     }
   }
-  createBars()
 
-  let softVolume = 0
   const animate = () => {
     if (microphone.initialized) {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -158,20 +172,6 @@ window.addEventListener("load", () => {
 
     requestAnimationFrame(animate)
   }
-  animate()
-
-  let userColorSet = [0, 0, 0]
-  colorRanges.forEach((input, index) => {
-    input.addEventListener("change", e => {
-      userColorSet[index] = +e.target.value
-      changeWingColors(userColorSet)
-    })
-  })
-  colorInputs.forEach((input, index) => {
-    input.addEventListener("change", e => {
-      changeMothColors(e, index)
-    })
-  })
 
   const changeWingColors = colorArray => {
     barsLeft.forEach((bar, index) => {
@@ -194,8 +194,6 @@ window.addEventListener("load", () => {
     mothGradientStops[index].setAttribute("stop-color", e.target.value)
   }
 
-  // Hide cursor after 3 seconds
-  let timeoutID
   const hideCursor = () => {
     document.body.classList.add("hide-cursor")
   }
@@ -206,67 +204,87 @@ window.addEventListener("load", () => {
     timeoutID = setTimeout(hideCursor, cursorTimeout) // Reset the timer to hide the cursor again
   }
 
+  const requestWakeLock = async () => {
+    try {
+      wakeLock = await navigator.wakeLock.request("screen")
+    } catch (error) {
+      console.error("Failed to activate screen wakeLock:", error)
+    }
+  }
+
+  const handleVisibilityChange = () => {
+    if (document.visibilityState !== "visible") {
+      if (wakeLock !== null) {
+        wakeLock
+          .release()
+          .then(() => console.log("Screen wakeLock released!"))
+          .catch(error =>
+            console.error("Failed to release screen wakeLock:", error)
+          )
+        wakeLock = null
+      }
+    } else {
+      if (wakeLock === null) {
+        requestWakeLock()
+      }
+    }
+  }
+  /* FUNCTIONS end */
+
+  /* INIT */
+  // Create microphone instance
+  const microphone = new Microphone(fftSize)
+  // Create bars (wings)
+  createBars()
+  // Start animation
+  animate()
   // Set initial timeout to hide cursor
   timeoutID = setTimeout(hideCursor, cursorTimeout)
+  /* INIT end */
 
+  /* EVENT LISTENERS */
   // Add event listener for mouse movement
   window.addEventListener("mousemove", resetCursorHideTimer)
-
-  // Add event listener for arrow to show fullscreen button
-  fullscreenArrow.addEventListener("click", () => {
-    fullscreenWrapper.classList.toggle("show")
-  })
-
-  // Add event listener for fullscreen button
-  fullscreenBtn.addEventListener("click", () => {
-    if (document.fullscreenElement) {
-      document.exitFullscreen()
-    } else {
-      document.documentElement.requestFullscreen()
-    }
-  })
 
   window.addEventListener("resize", () => {
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
   })
 
+  // Add event listener for arrow to show fullscreen button
+  fullscreenArrow.addEventListener("click", () => {
+    fullscreenWrapper.classList.toggle("show")
+  })
+
+  colorRanges.forEach((input, index) => {
+    input.addEventListener("change", e => {
+      userColorSet[index] = +e.target.value
+      changeWingColors(userColorSet)
+    })
+  })
+
+  colorInputs.forEach((input, index) => {
+    input.addEventListener("change", e => {
+      changeMothColors(e, index)
+    })
+  })
+
+  fullscreenBtn.addEventListener("click", () => {
+    if (document.fullscreenElement) document.exitFullscreen()
+    else document.documentElement.requestFullscreen()
+  })
+
   // Keep screen from going to sleep
   // Check if the wakeLock API is supported by the browser
   if ("wakeLock" in navigator) {
-    let wakeLock = null
-
-    // Function to request and enable the wakeLock
-    const requestWakeLock = async () => {
-      try {
-        wakeLock = await navigator.wakeLock.request("screen")
-      } catch (error) {
-        console.error("Failed to activate screen wakeLock:", error)
-      }
-    }
-
-    // Request wakeLock on initial page load
     requestWakeLock()
 
     // Add event listener to handle visibility change
     document.addEventListener("visibilitychange", () => {
-      if (document.visibilityState !== "visible") {
-        if (wakeLock !== null) {
-          wakeLock
-            .release()
-            .then(() => console.log("Screen wakeLock released!"))
-            .catch(error =>
-              console.error("Failed to release screen wakeLock:", error)
-            )
-          wakeLock = null
-        }
-      } else {
-        if (wakeLock === null) {
-          requestWakeLock()
-        }
-      }
+      handleVisibilityChange()
     })
   } else {
     console.warn("The wakeLock API is not supported by this browser.")
   }
+  /* EVENT LISTENERS end */
 })

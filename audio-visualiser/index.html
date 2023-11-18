@@ -10,6 +10,12 @@
   <body>
     <div class="fullscreen-wrapper" id="fullscreen-wrapper">
       <div class="fullscreen-wrapper-inner">
+        <button
+          class="fullscreen-arrow"
+          aria-label="show fullscreen toggle button"
+          title="toggle fullscreen"
+          id="fullscreen-arrow"
+        ></button>
         <div class="fullscreen-controls">
           <h2>controls</h2>
           <button
@@ -37,24 +43,18 @@
           <div class="moth-colors">
             <div>
               <label for="color-picker-1">color 1</label>
-              <input type="color" id="color-picker-1" />
+              <input type="color" id="color-picker-1" value="#00a093" />
             </div>
             <div>
               <label for="color-picker-2">color 2</label>
-              <input type="color" id="color-picker-2" />
+              <input type="color" id="color-picker-2" value="#009938" />
             </div>
             <div>
               <label for="color-picker-3">color 3</label>
-              <input type="color" id="color-picker-3" />
+              <input type="color" id="color-picker-3" value="#0067b3" />
             </div>
           </div>
         </div>
-        <button
-          class="fullscreen-arrow"
-          aria-label="show fullscreen toggle button"
-          title="toggle fullscreen"
-          id="fullscreen-arrow"
-        ></button>
       </div>
     </div>
     <svg id="moth" viewBox="0 0 500 500">
