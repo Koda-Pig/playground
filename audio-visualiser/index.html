@@ -11,6 +11,7 @@
     <div class="fullscreen-wrapper" id="fullscreen-wrapper">
       <div class="fullscreen-wrapper-inner">
         <div class="fullscreen-controls">
+          <h2>controls</h2>
           <button
             role="button"
             aria-label="fullscreen toggle"
@@ -19,20 +20,34 @@
           >
             toggle fullscreen
           </button>
-          <p>change wing colors</p>
-          <label for="range-1">color 1</label>
-          <input min="0" max="255" type="range" id="range-1" />
-          <label for="range-2">color 2</label>
-          <input min="0" max="0.95" step="0.05" type="range" id="range-2" />
-          <label for="range-3">color 3</label>
-          <input min="0" max="255" type="range" id="range-3" />
-          <p>change moth colors</p>
-          <label for="color-picker-1">color 1</label>
-          <input type="color" id="color-picker-1" />
-          <label for="color-picker-2">color 2</label>
-          <input type="color" id="color-picker-2" />
-          <label for="color-picker-3">color 3</label>
-          <input type="color" id="color-picker-3" />
+          <p>wing colors:</p>
+          <div>
+            <label for="range-1">red</label>
+            <input min="0" max="255" type="range" id="range-1" />
+          </div>
+          <div>
+            <label for="range-2">green</label>
+            <input min="0" max="0.95" step="0.05" type="range" id="range-2" />
+          </div>
+          <div>
+            <label for="range-3">blue</label>
+            <input min="0" max="255" type="range" id="range-3" />
+          </div>
+          <p>moth colors:</p>
+          <div class="moth-colors">
+            <div>
+              <label for="color-picker-1">color 1</label>
+              <input type="color" id="color-picker-1" />
+            </div>
+            <div>
+              <label for="color-picker-2">color 2</label>
+              <input type="color" id="color-picker-2" />
+            </div>
+            <div>
+              <label for="color-picker-3">color 3</label>
+              <input type="color" id="color-picker-3" />
+            </div>
+          </div>
         </div>
         <button
           class="fullscreen-arrow"

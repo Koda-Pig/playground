@@ -1,4 +1,6 @@
 $arrow-right: "data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools --%3E%3Csvg width='800px' height='800px' viewBox='0 0 24 24' id='_24x24_On_Light_Next' data-name='24x24/On Light/Next' xmlns='http://www.w3.org/2000/svg'%3E%3Crect id='view-box' width='24' height='24' fill='%23141124' opacity='0'/%3E%3Cpath id='Shape' d='M10.22,9.28a.75.75,0,0,1,0-1.06l2.72-2.72H.75A.75.75,0,0,1,.75,4H12.938L10.22,1.281A.75.75,0,1,1,11.281.22l4,4a.749.749,0,0,1,0,1.06l-4,4a.75.75,0,0,1-1.061,0Z' transform='translate(4.25 7.25)' fill='%23141124'/%3E%3C/svg%3E";
+$eigengrau: #16161d;
+$cosmic-latte: #fff8e7;
 
 * {
   margin: 0;
@@ -9,6 +11,7 @@ $arrow-right: "data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E
 body {
   background: #000;
   overflow: hidden;
+  font-family: sans-serif;
 
   &.hide-cursor {
     cursor: none;
@@ -58,26 +61,48 @@ canvas {
     }
   }
   &-controls {
+    color: $cosmic-latte;
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    p,
-    label {
-      font-family: sans-serif;
-      color: white;
+    gap: 16px;
+    padding: 16px;
+    background: $eigengrau;
+    border: 2px solid $cosmic-latte;
+    border-radius: 4px;
+    transition: box-shadow 0.2s;
+
+    &:hover,
+    &:focus {
+      box-shadow: 0 0 10px 0 rgba($cosmic-latte, 0.4);
     }
 
     p {
       font-size: 20px;
     }
+
+    label {
+      display: block;
+    }
+
+    .moth-colors {
+      display: flex;
+      justify-content: space-between;
+      gap: 4px;
+
+      > div {
+        gap: 8px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+      }
+    }
   }
   &-btn {
     font-size: 16px;
     border: none;
-    background: #17109a;
-    color: white;
+    background: $cosmic-latte;
+    color: $eigengrau;
     padding: 8px 16px;
-    box-shadow: 0px 0px 10px 0 rgba(255, 255, 255, 0.2);
     border-radius: 100vw;
     cursor: pointer;
     transition: box-shadow 0.2s;
