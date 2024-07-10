@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React Hooks</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        max-width: 700px;
+        margin-inline: auto;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #333;
+      }
+      pre {
+        background-color: #f4f4f4;
+        padding: 0 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>React</h1>
+    <h2>Hooks</h2>
+    <p>
+      In React, there are several hooks that are considered essential due to
+      their frequent usage and versatility. Here are some of the most valuable
+      React hooks to know:
+    </p>
+
+    <h3>useState</h3>
+    <p>
+      This hook allows you to add state to functional components. It's the most
+      basic and frequently used hook.
+    </p>
+    <pre>
+        <code>
+const [count, setCount] = useState(0)
+        </code>
+    </pre>
+
+    <hr />
+
+    <h3>useEffect</h3>
+    <p>
+      This hook lets you perform side effects in functional components, such as
+      fetching data, setting up a subscription, and manually changing the DOM.
+    </p>
+    <pre>
+        <code>
+useEffect(() => {
+  // Code to run on mount and update
+  return () => {
+    // Cleanup code to run on unmount
+  }
+}, [dependencies])
+        </code>
+    </pre>
+
+    <hr />
+
+    <h3>useContext</h3>
+    <p>
+      This hook lets you subscribe to React context without introducing nesting.
+    </p>
+    <pre>
+        <code>
+const value = useContext(MyContext)
+        </code>
+    </pre>
+
+    <hr />
+
+    <h3>useRef</h3>
+    <p>
+      This hook allows you to persist values across renders without causing a
+      re-render. It's often used for accessing DOM elements or storing mutable
+      values.
+    </p>
+    <pre>
+        <code>
+const inputRef = useRef(null)
+        </code>
+    </pre>
+
+    <hr />
+
+    <h3>useReducer</h3>
+    <p>
+      This hook is used for managing complex state logic in a more structured
+      way, as an alternative to useState.
+    </p>
+    <pre>
+        <code>
+const [state, dispatch] = useReducer(reducer, initialState)
+        </code>
+    </pre>
+
+    <hr />
+
+    <h3>useCallback</h3>
+    <p>
+      This hook returns a memoized callback function, which can be useful to
+      optimize performance when passing callbacks to child components.
+    </p>
+    <pre>
+        <code>
+const memoizedCallback = useCallback(() => {
+  doSomething(a, b)
+}, [a, b])
+        </code>
+    </pre>
+
+    <hr />
+
+    <h3>useMemo</h3>
+    <p>
+      This hook returns a memoized value, which helps to optimize performance by
+      memoizing expensive calculations.
+    </p>
+    <pre>
+        <code>
+const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b])
+        </code>
+    </pre>
+
+    <hr />
+
+    <h3>useLayoutEffect</h3>
+    <p>
+      This hook is similar to useEffect but it runs synchronously after all DOM
+      mutations. It's used for reading layout from the DOM and synchronizing it.
+    </p>
+    <pre>
+        <code>
+useLayoutEffect(() => {
+  // Code to run after all DOM mutations
+}, [dependencies])
+        </code>
+    </pre>
+
+    <hr />
+
+    <h3>useImperativeHandle</h3>
+    <p>
+      This hook customizes the instance value that is exposed when using ref
+      with a component.
+    </p>
+    <pre>
+        <code>
+useImperativeHandle(ref, () => ({
+  // Return an object with the instance values
+}))
+        </code>
+    </pre>
+
+    <hr />
+
+    <p>
+      Understanding and effectively using these hooks will help you write more
+      efficient and maintainable React components. Each hook serves a specific
+      purpose and can greatly simplify tasks that would otherwise require more
+      complex code or patterns.
+    </p>
+  </body>
+</html>
