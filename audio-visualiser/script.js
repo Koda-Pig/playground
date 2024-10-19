@@ -1,4 +1,4 @@
-window.addEventListener("load", () => {
+const startListening = () => {
   /* NODES: */
   const canvas = document.querySelector("canvas"),
     ctx = canvas.getContext("2d"),
@@ -48,38 +48,38 @@ window.addEventListener("load", () => {
       } else this.height -= this.height * 0.01
     }
     draw(context) {
-      if (this.index % 3 === 0) {
-        context.strokeStyle = this.color
-        context.lineWidth = this.width
-        context.save()
-        context.rotate(this.index * -0.005)
+      if (this.index % 3 !== 0) return
+
+      context.strokeStyle = this.color
+      context.lineWidth = this.width
+      context.save()
+      context.rotate(this.index * -0.005)
+      context.beginPath()
+      context.bezierCurveTo(
+        this.x / 2,
+        this.y / 2,
+        this.height * -0.5 - 0.2569373072970195 * windowHeight,
+        this.height + 450,
+        this.x,
+        this.y
+      )
+      context.stroke()
+      if (this.index > 100) {
         context.beginPath()
-        context.bezierCurveTo(
-          this.x / 2,
-          this.y / 2,
-          this.height * -0.5 - 0.2569373072970195 * windowHeight,
-          this.height + 450,
+        context.arc(
           this.x,
-          this.y
+          this.y + 10 + this.height / 2,
+          this.height * 0.1,
+          0,
+          Math.PI * 2
         )
         context.stroke()
-        if (this.index > 100) {
-          context.beginPath()
-          context.arc(
-            this.x,
-            this.y + 10 + this.height / 2,
-            this.height * 0.1,
-            0,
-            Math.PI * 2
-          )
-          context.stroke()
-          context.beginPath()
-          context.moveTo(this.x, this.y + 20)
-          context.lineTo(this.x, this.y + 10 + this.height / 2)
-          context.stroke()
-        }
-        context.restore()
+        context.beginPath()
+        context.moveTo(this.x, this.y + 20)
+        context.lineTo(this.x, this.y + 10 + this.height / 2)
+        context.stroke()
       }
+      context.restore()
     }
   }
 
@@ -87,24 +87,32 @@ window.addEventListener("load", () => {
     constructor(fftSize) {
       // Fast Fourier Transform - used by web audio api,
       // to slice raw stream data into a specific amount of audio samples
+      this.fftSize = fftSize
       this.initialized = false
-      navigator.mediaDevices
+      this.init(fftSize)
+    }
+    init() {
+      const media = navigator.mediaDevices
+      media
         .getUserMedia({ audio: true })
         .then(stream => {
-          this.audioContext = new AudioContext()
-          this.microphone = this.audioContext.createMediaStreamSource(stream)
-          this.analyser = this.audioContext.createAnalyser()
-          this.analyser.fftSize = fftSize
-          const bufferLength = this.analyser.frequencyBinCount
-          this.dataArray = new Uint8Array(bufferLength)
-          this.microphone.connect(this.analyser)
+          this.handleStream(stream)
           this.initialized = true
         })
         .catch(err => {
           alert(err)
         })
     }
-    getSamples() {
+    handleStream(stream) {
+      this.audioContext = new AudioContext()
+      this.microphone = this.audioContext.createMediaStreamSource(stream)
+      this.analyser = this.audioContext.createAnalyser()
+      this.analyser.fftSize = this.fftSize
+      const bufferLength = this.analyser.frequencyBinCount
+      this.dataArray = new Uint8Array(bufferLength)
+      this.microphone.connect(this.analyser)
+    }
+    get samples() {
       this.analyser.getByteTimeDomainData(this.dataArray)
       let normSamples = [...this.dataArray].map(e => e / 128 - 1)
       return normSamples
@@ -136,52 +144,42 @@ window.addEventListener("load", () => {
   }
 
   const animate = () => {
-    if (microphone.initialized) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-      const samples = microphone.getSamples()
-      const volume = microphone.getVolume()
+    if (!microphone.initialized) {
+      requestAnimationFrame(animate)
+      return
+    }
 
-      // left wing
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    const samples = microphone.samples
+    const volume = microphone.getVolume()
+
+    Array.from(["left", "right"]).forEach((wing, i) => {
+      let isLeft = wing === "left"
       ctx.save()
-      ctx.translate(canvas.width / 2 + 21, canvas.height / 2 - 120)
-      ctx.scale(1, 1)
+      if (isLeft) {
+        ctx.translate(canvas.width / 2 + 21, canvas.height / 2 - 120)
+        ctx.scale(1, 1)
+      }
+      if (!isLeft) {
+        ctx.translate(canvas.width / 2 - 21, canvas.height / 2 - 120)
+        ctx.scale(-1, 1)
+      }
       ctx.rotate(1.7)
       barsLeft.forEach((bar, i) => {
         bar.update(samples[i])
         bar.draw(ctx)
       })
       ctx.restore()
+    })
 
-      //right wing
-      ctx.save()
-      ctx.translate(canvas.width / 2 - 21, canvas.height / 2 - 120)
-      ctx.scale(-1, 1)
-      ctx.rotate(1.7)
-      barsRight.forEach((bar, i) => {
-        bar.update(samples[i])
-        bar.draw(ctx)
-      })
-      ctx.restore()
-
-      // Round to 4 decimal places
-      softVolume = (softVolume * 0.1 + volume * 0.1).toFixed(4)
-      ;(moth.style.transform =
-        "translate(-50%, -50%) scale(" + (0.82 + softVolume * 3)),
-        0 + softVolume * 3 + ")"
-    }
+    softVolume = (softVolume * 0.1 + volume * 0.1).toFixed(4)
+    moth.style.scale = 0.82 + softVolume * 3
 
     requestAnimationFrame(animate)
   }
 
   const changeWingColors = colorArray => {
-    barsLeft.forEach((bar, index) => {
-      bar.color = colorTemplate(
-        colorArray[0],
-        index * colorArray[1],
-        Math.random() * colorArray[2]
-      )
-    })
-    barsRight.forEach((bar, index) => {
+    Array.from([...barsLeft, ...barsRight]).forEach((bar, index) => {
       bar.color = colorTemplate(
         colorArray[0],
         index * colorArray[1],
@@ -213,20 +211,18 @@ window.addEventListener("load", () => {
   }
 
   const handleVisibilityChange = () => {
-    if (document.visibilityState !== "visible") {
-      if (wakeLock !== null) {
-        wakeLock
-          .release()
-          .then(() => console.log("Screen wakeLock released!"))
-          .catch(error =>
-            console.error("Failed to release screen wakeLock:", error)
-          )
-        wakeLock = null
-      }
+    if (wakeLock === null) return
+
+    if (document.visibilityState === "visible") {
+      requestWakeLock()
     } else {
-      if (wakeLock === null) {
-        requestWakeLock()
-      }
+      wakeLock
+        .release()
+        .then(() => console.info("Screen wakeLock released"))
+        .catch(error =>
+          console.error("Failed to release screen wakeLock:", error)
+        )
+      wakeLock = null
     }
   }
   /* FUNCTIONS end */
@@ -252,9 +248,9 @@ window.addEventListener("load", () => {
   })
 
   // Add event listener for arrow to show fullscreen button
-  fullscreenArrow.addEventListener("click", () => {
+  fullscreenArrow.addEventListener("click", () =>
     fullscreenWrapper.classList.toggle("show")
-  })
+  )
 
   colorRanges.forEach((input, index) => {
     input.addEventListener("change", e => {
@@ -287,4 +283,6 @@ window.addEventListener("load", () => {
     console.warn("The wakeLock API is not supported by this browser.")
   }
   /* EVENT LISTENERS end */
-})
+}
+
+window.addEventListener("load", startListening)

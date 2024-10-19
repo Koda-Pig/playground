@@ -30,9 +30,9 @@ canvas {
 
 #moth {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0.69);
+  inset: 0;
+  margin: auto;
+  scale: 0.69;
   width: 800px;
   max-width: 100vmax;
 
