@@ -1,14 +1,14 @@
-import Player from './player.js'
-import { ResizeWindow, drawStatusText } from './utils.js'
-import InputHandler from './input.js'
+import Player from "./player.js"
+import { ResizeWindow, drawStatusText } from "./utils.js"
+import InputHandler from "./input.js"
 
-window.addEventListener('load', () => {
-  const canvas = document.querySelector('canvas'),
-    ctx = canvas.getContext('2d'),
-    loading = document.getElementById('loading')
+window.addEventListener("load", () => {
+  const canvas = document.querySelector("canvas")
+  const ctx = canvas.getContext("2d")
+  const loading = document.getElementById("loading")
   canvas.width = window.innerWidth
   canvas.height = window.innerHeight
-  loading.style.display = 'none'
+  loading.style.display = "none"
 
   const player = new Player(canvas.width, canvas.height)
   const input = new InputHandler()

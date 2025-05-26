@@ -1,5 +1,6 @@
 import { Bar } from "./bar.js"
 import { Microphone } from "./microphone.js"
+import "./style.scss"
 
 const startBtn = document.querySelector("#start-btn")
 const canvas = document.querySelector("canvas")

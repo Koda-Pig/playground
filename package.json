@@ -2,26 +2,15 @@
   "name": "playground",
   "version": "0.0.0",
   "scripts": {
-    "vite": "vite",
-    "dev": "concurrently \"npm run vite\" \"npm run sass\"",
+    "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "sass": "sass --watch audio-visualiser:audio-visualiser knight-of-cups:knight-of-cups mobile-sidescroller:mobile-sidescroller when-pigs-fly:when-pigs-fly --style compressed"
-  },
-  "dependencies": {
-    "@babel/preset-env": "^7.23.3",
-    "concurrently": "^8.2.2",
-    "sass": "^1.69.5"
+    "preview": "vite preview"
   },
   "devDependencies": {
-    "vite": "^2.7.2",
-    "@babel/cli": "^7.23.0",
-    "@babel/core": "^7.23.3",
-    "@babel/preset-react": "^7.23.3",
-    "@rollup/plugin-babel": "^6.0.4",
-    "@rollup/plugin-commonjs": "^25.0.7",
-    "@rollup/plugin-node-resolve": "^15.2.3",
-    "rollup": "^2.79.1",
-    "rollup-plugin-terser": "^7.0.2"
+    "@types/node": "^22.15.21",
+    "sass": "^1.89.0",
+    "typescript": "~5.8.3",
+    "vite": "^6.3.5",
+    "vite-plugin-handlebars": "^2.0.0"
   }
 }

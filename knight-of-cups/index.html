@@ -5,7 +5,6 @@
     <link rel="icon" type="image/svg+xml" href="../favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Knight of Cups</title>
-    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <button class="restart-btn inactive">restart</button>
@@ -16,7 +15,16 @@
       <button class="start-btn">play</button>
     </div>
     <div class="floor"></div>
-    <canvas></canvas>
-    <script src="script.js"></script>
+    <img
+      src="./media/cuphead-lr.png"
+      id="playerImg"
+      alt=""
+      style="display: none"
+    />
+    <audio id="eraseSound" src="./media/erase.wav"></audio>
+    <img src="./media/ooma.png" id="enemyImg" alt="" style="display: none" />
+
+    <canvas class=""> </canvas>
+    <script type="module" src="script.js"></script>
   </body>
 </html>

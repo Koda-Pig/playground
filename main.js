@@ -1,32 +1,32 @@
 window.addEventListener("load", () => {
-  const hamburger = document.querySelector("nav span"),
-    nav = document.querySelector("nav"),
-    leftEyeball = document.querySelector("#eye-left"),
-    rightEyeball = document.querySelector("#eye-right"),
-    skull = document.querySelector("#skull")
+  const hamburger = document.querySelector("nav span")
+  const nav = document.querySelector("nav")
+  const leftEyeball = document.querySelector("#eye-left")
+  const rightEyeball = document.querySelector("#eye-right")
+  const skull = document.querySelector("#skull")
 
   // toggle menu on mobile
   hamburger.addEventListener("click", () => nav.classList.toggle("active"))
 
   // move eyeballs on mousemove
   window.addEventListener("mousemove", e => {
-    const mouseX = e.clientX,
-      mouseY = e.clientY,
-      rect = skull.getBoundingClientRect(),
-      anchorX = rect.left + rect.width / 2,
-      anchorY = rect.top + rect.height / 2,
-      angleDegLeft = angle(
-        mouseX,
-        mouseY,
-        anchorX - leftEyeball.offsetWidth,
-        anchorY
-      ),
-      angleDegRight = angle(
-        mouseX,
-        mouseY,
-        anchorX + rightEyeball.offsetWidth,
-        anchorY
-      )
+    const mouseX = e.clientX
+    const mouseY = e.clientY
+    const rect = skull.getBoundingClientRect()
+    const anchorX = rect.left + rect.width / 2
+    const anchorY = rect.top + rect.height / 2
+    const angleDegLeft = angle(
+      mouseX,
+      mouseY,
+      anchorX - leftEyeball.offsetWidth,
+      anchorY
+    )
+    const angleDegRight = angle(
+      mouseX,
+      mouseY,
+      anchorX + rightEyeball.offsetWidth,
+      anchorY
+    )
     leftEyeball.style.transform = `rotate(${90 + angleDegLeft}deg)`
     rightEyeball.style.transform = `rotate(${90 + angleDegRight}deg)`
   })

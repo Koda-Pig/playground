@@ -1,27 +1,30 @@
-window.addEventListener('load', () => {
-  const canvas = document.querySelector('canvas'),
-    ctx = canvas.getContext('2d'),
-    startBtn = document.querySelector('.start-btn'),
-    restartBtn = document.querySelector('.restart-btn'),
-    instructions = document.querySelector('.instructions')
+import "./style.scss"
+
+window.addEventListener("load", () => {
+  const canvas = document.querySelector("canvas")
+  const ctx = canvas.getContext("2d")
+  const startBtn = document.querySelector(".start-btn")
+  const restartBtn = document.querySelector(".restart-btn")
+  const instructions = document.querySelector(".instructions")
   canvas.width = window.innerWidth
   canvas.height = window.innerHeight
 
-  let fpsInterval,
-    now,
-    then,
-    elapsed,
-    keys = [],
-    enemies = [],
-    implosions = [],
-    gameOver = false,
-    timeToNextEnemy = 0,
-    level = 1,
-    enemyInterval = 20,
-    score = 0,
-    scoreCounter = 1,
-    highscore = localStorage.getItem('cupHeadLiteHighScore') || 0, // check if a high score is saved in user browser
-    levelCount = 0
+  let fpsInterval
+  let now
+  let then
+  let elapsed
+  let keys = []
+  let enemies = []
+  let implosions = []
+  let gameOver = false
+  let timeToNextEnemy = 0
+  let level = 1
+  let enemyInterval = 20
+  let score = 0
+  let scoreCounter = 1
+  let startTime
+  let highscore = localStorage.getItem("cupHeadLiteHighScore") || 0 // check if a high score is saved in user browser
+  let levelCount = 0
 
   let gradient = ctx.createRadialGradient(
     canvas.width / 2,
@@ -31,27 +34,25 @@ window.addEventListener('load', () => {
     canvas.height / 2,
     100
   )
-  gradient.addColorStop(0, 'rgba(205,24,24,0.4')
-  gradient.addColorStop(0.1, 'rgba(205,24,24,0.2')
-  gradient.addColorStop(0.6, 'rgba(0,0,0,0.0')
+  gradient.addColorStop(0, "rgba(205,24,24,0.4")
+  gradient.addColorStop(0.1, "rgba(205,24,24,0.2")
+  gradient.addColorStop(0.6, "rgba(0,0,0,0.0")
 
   let player = {
-      action: 'idle',
-      width: 103.0625,
-      height: 113.125,
-      x: canvas.width / 2 - 50,
-      y: canvas.height / 2 - 50,
-      speed: 20,
-      frameX: 3,
-      frameY: 5,
-      minFrame: 0,
-      maxFrame: 8,
-      health: 10
-    },
-    playerImage = new Image(),
-    enemyImage = new Image()
-  playerImage.src = 'media/cuphead-lr.png'
-  enemyImage.src = 'media/ooma.png'
+    action: "idle",
+    width: 103.0625,
+    height: 113.125,
+    x: canvas.width / 2 - 50,
+    y: canvas.height / 2 - 50,
+    speed: 20,
+    frameX: 3,
+    frameY: 5,
+    minFrame: 0,
+    maxFrame: 8,
+    health: 10,
+  }
+  let playerImage = document.querySelector("#playerImg")
+  let enemyImage = document.querySelector("#enemyImg")
 
   class Enemy {
     constructor() {
@@ -123,8 +124,7 @@ window.addEventListener('load', () => {
       this.x = x
       this.y = y
       this.markedForDeletion = false
-      this.sound = new Audio()
-      this.sound.src = 'media/erase.wav'
+      this.sound = document.querySelector("#eraseSound")
     }
     update() {
       this.sound.play()
@@ -176,8 +176,8 @@ window.addEventListener('load', () => {
   function updatePlayer() {
     // checks user input
     if (
-      keys['ArrowRight'] &&
-      keys['ArrowUp'] &&
+      keys["ArrowRight"] &&
+      keys["ArrowUp"] &&
       player.x < canvas.width - player.width &&
       player.y > 0
     ) {
@@ -187,8 +187,8 @@ window.addEventListener('load', () => {
       player.y -= player.speed * 0.75
       player.x += player.speed * 0.75
     } else if (
-      keys['ArrowRight'] &&
-      keys['ArrowDown'] &&
+      keys["ArrowRight"] &&
+      keys["ArrowDown"] &&
       player.x < canvas.width - player.width &&
       player.y < canvas.height - player.height
     ) {
@@ -198,8 +198,8 @@ window.addEventListener('load', () => {
       player.y += player.speed * 0.75
       player.x += player.speed * 0.75
     } else if (
-      keys['ArrowLeft'] &&
-      keys['ArrowDown'] &&
+      keys["ArrowLeft"] &&
+      keys["ArrowDown"] &&
       player.x > 0 &&
       player.y < canvas.height - player.height
     ) {
@@ -209,8 +209,8 @@ window.addEventListener('load', () => {
       player.y += player.speed * 0.75
       player.x -= player.speed * 0.75
     } else if (
-      keys['ArrowLeft'] &&
-      keys['ArrowUp'] &&
+      keys["ArrowLeft"] &&
+      keys["ArrowUp"] &&
       player.x > 0 &&
       player.y > 0
     ) {
@@ -219,27 +219,27 @@ window.addEventListener('load', () => {
       player.maxFrame = 14
       player.y -= player.speed * 0.75
       player.x -= player.speed * 0.75
-    } else if (keys['ArrowUp'] && player.y > 0) {
+    } else if (keys["ArrowUp"] && player.y > 0) {
       player.frameY = 0
       player.minFrame = 4
       player.maxFrame = 15
       player.y -= player.speed
-    } else if (keys['ArrowRight'] && player.x < canvas.width - player.width) {
+    } else if (keys["ArrowRight"] && player.x < canvas.width - player.width) {
       player.frameY = 3
       player.minFrame = 3
       player.maxFrame = 13
       player.x += player.speed
-    } else if (keys['ArrowDown'] && player.y < canvas.height - player.height) {
+    } else if (keys["ArrowDown"] && player.y < canvas.height - player.height) {
       player.frameY = 6
       player.minFrame = 0
       player.maxFrame = 12
       player.y += player.speed
-    } else if (keys['ArrowLeft'] && player.x > 0) {
+    } else if (keys["ArrowLeft"] && player.x > 0) {
       player.frameY = 11
       player.minFrame = 3
       player.maxFrame = 13
       player.x -= player.speed
-    } else if (keys[' '] && player.y > 0) {
+    } else if (keys[" "] && player.y > 0) {
       player.frameY = 7
       player.minFrame = 3
       player.maxFrame = 13
@@ -264,13 +264,13 @@ window.addEventListener('load', () => {
       true
     )
     ctx.lineWidth = 10
-    ctx.strokeStyle = 'red'
+    ctx.strokeStyle = "red"
     ctx.stroke()
-    ctx.font = '30px Impact'
-    ctx.shadowColor = 'black'
-    ctx.textAlign = 'center'
+    ctx.font = "30px Impact"
+    ctx.shadowColor = "black"
+    ctx.textAlign = "center"
     ctx.shadowBlur = 5
-    ctx.fillStyle = 'white'
+    ctx.fillStyle = "white"
     ctx.fillText(player.health, 60, canvas.height - 46)
     ctx.restore()
   }
@@ -278,70 +278,71 @@ window.addEventListener('load', () => {
   function drawLevel() {
     if (levelCount == 10) {
       level++
-      ;(enemyInterval = 20 / level), (levelCount = 0)
+      enemyInterval = 20 / level
+      levelCount = 0
     }
     ctx.save()
-    ctx.font = '30px Impact'
-    ctx.textAlign = 'right'
-    ctx.shadowColor = 'black'
+    ctx.font = "30px Impact"
+    ctx.textAlign = "right"
+    ctx.shadowColor = "black"
     ctx.shadowBlur = 5
-    ctx.fillStyle = 'white'
-    ctx.fillText('Level: ' + level, canvas.width - 10, canvas.height - 10)
+    ctx.fillStyle = "white"
+    ctx.fillText("Level: " + level, canvas.width - 10, canvas.height - 10)
     ctx.restore()
   }
 
   function drawScore() {
     ctx.save()
-    ctx.font = '30px Impact'
-    ctx.shadowColor = 'black'
+    ctx.font = "30px Impact"
+    ctx.shadowColor = "black"
     ctx.shadowBlur = 5
-    ctx.fillStyle = 'white'
-    ctx.fillText('Score: ' + score, 20, 35)
+    ctx.fillStyle = "white"
+    ctx.fillText("Score: " + score, 20, 35)
     ctx.restore()
   }
 
   function highScore() {
-    if (score > localStorage.getItem('cupHeadLiteHighScore')) {
-      localStorage.setItem('cupHeadLiteHighScore', score)
+    if (score > localStorage.getItem("cupHeadLiteHighScore")) {
+      localStorage.setItem("cupHeadLiteHighScore", score)
       highscore = score
     }
     ctx.save()
-    ctx.font = '30px Impact'
-    ctx.textAlign = 'center'
-    ctx.shadowColor = 'black'
+    ctx.font = "30px Impact"
+    ctx.textAlign = "center"
+    ctx.shadowColor = "black"
     ctx.shadowBlur = 5
-    ctx.fillStyle = 'white'
-    ctx.fillText('High Score: ' + highscore, canvas.width / 2, 35)
+    ctx.fillStyle = "white"
+    ctx.fillText("High Score: " + highscore, canvas.width / 2, 35)
     ctx.restore()
   }
 
   function drawGameOver() {
     ctx.save()
-    ctx.shadowColor = 'black'
+    ctx.shadowColor = "black"
     ctx.shadowBlur = 5
-    ctx.textAlign = 'center'
-    ctx.fillStyle = 'white'
-    ctx.font = '110px Impact'
-    ctx.fillText('GAME OVER', canvas.width / 2, canvas.height / 2)
-    ctx.font = '60px Impact'
-    ctx.fillText('score: ' + score, canvas.width / 2, canvas.height / 2 + 100)
+    ctx.textAlign = "center"
+    ctx.fillStyle = "white"
+    ctx.font = "110px Impact"
+    ctx.fillText("GAME OVER", canvas.width / 2, canvas.height / 2)
+    ctx.font = "60px Impact"
+    ctx.fillText("score: " + score, canvas.width / 2, canvas.height / 2 + 100)
     ctx.fillText(
-      'high score: ' + highscore,
+      "high score: " + highscore,
       canvas.width / 2,
       canvas.height / 2 + 200
     )
     ctx.restore()
   }
 
-  window.addEventListener('keydown', (e) => {
+  window.addEventListener("keydown", e => {
     keys[e.key] = true
   })
 
-  window.addEventListener('keyup', (e) => {
+  window.addEventListener("keyup", e => {
     delete keys[e.key]
   })
 
-  window.addEventListener('resize', () => {
+  window.addEventListener("resize", () => {
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
   })
@@ -365,13 +366,13 @@ window.addEventListener('load', () => {
           enemies.push(new Enemy())
           timeToNextEnemy = 0
         }
-        enemies.forEach((object) => object.update())
-        enemies.forEach((object) => object.draw())
-        enemies.forEach((object) => object.collisionDetection())
-        enemies = enemies.filter((object) => !object.markedForDeletion)
-        implosions.forEach((object) => object.update())
-        implosions.forEach((object) => object.draw())
-        implosions = implosions.filter((object) => !object.markedForDeletion)
+        enemies.forEach(object => object.update())
+        enemies.forEach(object => object.draw())
+        enemies.forEach(object => object.collisionDetection())
+        enemies = enemies.filter(object => !object.markedForDeletion)
+        implosions.forEach(object => object.update())
+        implosions.forEach(object => object.draw())
+        implosions = implosions.filter(object => !object.markedForDeletion)
       }
     } else {
       drawGameOver()
@@ -385,28 +386,28 @@ window.addEventListener('load', () => {
     animate()
   }
 
-  startBtn.addEventListener('click', () => {
-    instructions.classList.add('inactive')
-    restartBtn.classList.replace('inactive', 'active')
+  startBtn.addEventListener("click", () => {
+    instructions.classList.add("inactive")
+    restartBtn.classList.replace("inactive", "active")
     startAnimating(20)
   })
 
-  restartBtn.addEventListener('click', () => {
+  restartBtn.addEventListener("click", () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    ;(player.health = 10),
-      (player.x = canvas.width / 2 - 50),
-      (player.y = canvas.height / 2 - 50),
-      (keys = []),
-      (enemies = []),
-      (implosions = []),
-      (gameOver = false),
-      (timeToNextEnemy = 0),
-      (level = 1),
-      (enemyInterval = 20),
-      (score = 0),
-      (scoreCounter = 1),
-      (highscore = localStorage.getItem('cupHeadLiteHighScore') || 0), // check if a high score is saved in user browser
-      (levelCount = 0)
+    player.health = 10
+    player.x = canvas.width / 2 - 50
+    player.y = canvas.height / 2 - 50
+    keys = []
+    enemies = []
+    implosions = []
+    gameOver = false
+    timeToNextEnemy = 0
+    level = 1
+    enemyInterval = 20
+    score = 0
+    scoreCounter = 1
+    highscore = localStorage.getItem("cupHeadLiteHighScore") || 0 // check if a high score is saved in user browser
+    levelCount = 0
     startAnimating(20)
   })
 })
