@@ -24,11 +24,9 @@ window.addEventListener("load", () => {
   let pigs = []
   let explosions = []
   let particles = []
-  let gameOverSound = new Audio()
-  let loseHealthSound = new Audio()
+  let gameOverSound = document.querySelector("#game-over")
+  let loseHealthSound = document.querySelector("#blip")
 
-  loseHealthSound.src = "media/blip.wav"
-  gameOverSound.src = "media/game-over.wav"
   ctx.font = "30px Impact"
 
   class Pig {
@@ -43,8 +41,7 @@ window.addEventListener("load", () => {
       this.directionX = Math.random() * level * 4 + 2 // og was * 5 + 3
       this.directionY = Math.random() * 5 - 2.5
       this.markedForDeletion = false
-      this.image = new Image()
-      this.image.src = "media/flying-pigs.png"
+      this.image = document.querySelector("#flying-pigs")
       this.frame = 0
       this.maxFrame = 4
       this.timeSinceFlap = 0
@@ -100,16 +97,14 @@ window.addEventListener("load", () => {
 
   class Explosion {
     constructor(x, y, size) {
-      this.image = new Image()
-      this.image.src = "media/boom.png"
+      this.image = document.querySelector("#boom")
       this.spriteWidth = 200
       this.spriteHeight = 179
       this.size = size
       this.x = x
       this.y = y
       this.frame = 0
-      this.sound = new Audio()
-      this.sound.src = "media/oink.wav"
+      this.sound = document.querySelector("#oink")
       this.timeSinceLastFrame = 0
       this.frameInterval = 100
       this.markedForDeletion = false
